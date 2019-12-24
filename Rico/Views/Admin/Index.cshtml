@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Đăng Nhập | Quản Trị Hệ Thống";
+    Layout = "~/Views/Shared/_Login.cshtml";
+    var img = new CaptchaProvider().CreateCaptcha();
+}
+
+<!-- Validate Data -->
+<script type="text/javascript">
+    (function ($, W, D) {
+        var JQUERY4U = {};
+        JQUERY4U.UTIL =
+        {
+            setupFormValidation: function () {
+                //validation rules
+                $("#admin-login-form").validate({
+                    rules: {
+                        UserName: { required: true },
+                        pass: { required: true },
+                        Captcha: { required: true },
+                    },
+                    messages: {
+                        UserName: { required: "Phải nhập tên truy cập" },
+                        pass: { required: "Phải nhập mật khẩu" },
+                        Captcha: { required: "Phải nhập mã an toàn" },
+                    },
+                    submitHandler: function (form) {
+                        form.submit();
+                    }
+                });
+            }
+        }
+
+        //when the dom has loaded setup form validation rules
+        $(D).ready(function ($) {
+            JQUERY4U.UTIL.setupFormValidation();
+        });
+
+    })(jQuery, window, document);
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function ()
+        {
+            // Ajax sử dụng cho kiểm tra trùng Email
+            $("#Email").change(function () {
+                var Email = $(this).val();
+                if (Email != "")
+                {
+                    $.post("/Pages/Checkmail", { "mail": Email },
+                        function (data) {
+                            $("#ermail").html(data);
+                        });
+                }
+                else
+                {
+                    $.post("/Pages/Checkmail", { "mail": Email },
+                       function (data) {
+                           $("#ermail").html(data);
+                       });
+                }
+            });
+
+            // Ajax sử dụng cho kiểm tra Capcha
+            $("#Captcha").change(function () {
+                var Captcha = $(this).val();
+                if (Captcha != "") {
+                    $.post("/Admin/Capcha", { "captcha": Captcha },
+                        function (data) {
+                            $("#capcha").html(data);
+                        });
+                }
+                else {
+                    $.post("/Admin/Capcha", { "mail": Email },
+                       function (data) {
+                           $("#capcha").html(data);
+                       });
+                }
+            });
+        });
+</script>
+<!-- End Validate Data --> 
+@using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "admin-login-form", @class = "validate-form" }))
+{
+    @*<form id="admin-login-form" method="post">*@
+    <div id="mainlogin">
+        <div id="logo">Vui lòng điền tên đăng nhập và mật khẩu</div>
+        <div id="lg">
+            <div id="login">
+                <div class="userpass">
+                    <div class="up1">
+                        <i class="icon-user"></i>
+                    </div>
+                    <div class="up2">
+                        <input id="UserName" name="UserName" type="text" maxlength="50" placeholder="Tên đăng nhập" />
+                    </div>
+                </div>
+                <div class="userpass">
+                    <div class="up1">
+                        <span><i class="icon-key"></i></span>
+                    </div>
+                    <div class="up2">
+                        <input id="pass" name="pass" type="password" maxlength="50" placeholder="Mật khẩu" />
+                    </div>
+                </div>
+                <div class="userpass">
+                    <div class="up1">
+                        <span class="lbl-capcha">Mã an toàn</span>
+                    </div>
+                    <div class="up2">
+                        <img src="@img" /><a href="@this.Request.Url.AbsoluteUri" class="reloadCaptcha"><span class="capcha">CAPTCHA khác</span></a>                        
+                    </div>
+                    </div>
+                <div class="userpass">
+                    <div class="up1">
+                        <span class="lbl-capcha">Điền</span>
+                    </div>
+                    <div class="up2">
+                        @Html.TextBox("Captcha")<label class="error" id="capcha"></label>
+                    </div>
+                </div>
+            @if (@ViewBag.Err != "")
+            {
+                <div id="err-messange" style="color:red;font-size:0.875em;margin-top: -7px;">
+                    @ViewBag.Err
+                </div>
+            }
+            <div id="dangnhap">
+                <input id="dn" type="submit" value="Đăng nhập" />
+            </div>
+        </div>
+    </div>
+        </div>
+@*</form>*@
+}
+
+
+
+
+
+
+

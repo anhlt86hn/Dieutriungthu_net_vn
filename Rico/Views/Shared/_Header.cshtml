@@ -1,0 +1,50 @@
+﻿<header>
+    <!--#region toptop-->
+    <div id="toptop"> 
+    <div class="main">              
+        <div class="share"> 
+        <div class="addthis_toolbox share"> 
+    <a class="addthis_button_facebook at300b" title="Facebook"> 
+            <img src="~/Content/Images/icon_face.png" alt="Share to Facebook" border="0"> </a> 
+    <a class="addthis_button_twitter at300b" title="Tweet"> 
+            <img src="~/Content/Images/icon_twiter.png" alt="Share to Twitter" border="0"> </a> 
+    <a class="addthis_button_pinterest_share at300b" title="Printerest"> 
+            <img src="~/Content/Images/icon_pinterest.png" alt="Share to printerest" border="0"> </a> 
+    <a class="addthis_button_google_plusone_share" title="Google+"> 
+            <img src="~/Content/Images/icon_gg.png" alt="google bookmark" border="0"> </a> 
+            </div>         
+        </div>         
+        <div class="toptop-nav"> 
+        <ul class=""> 
+            <li><span><i></i><a href="https://www.facebook.com/luongtuananh.86" style="color:yellow;">Lương Tuấn Anh</a> - Tư vấn giải pháp điều trị ung thư hiệu quả nhất tại Việt Nam.</span></li> </ul> 
+        </div>                 
+        <div class="clear"></div> 
+    </div>
+    </div> 
+    |<!--#endregion-->
+    <!--#region logo-->
+    <div id="htop"> 
+    <div class="logo">
+        <img alt="Logo Mobile Seiken" title="Logo Mobile Seiken" src="~/Content/Images/logo_mobile.png">
+    </div>
+    </div>
+    <div class="logo-phone">
+        <img alt="Logo Seiken" title="Logo Seiken" src="~/Content/Images/logo.png" />
+    </div>
+    @*<div id="htop2">
+        <div class="btn_menu" id="sib_btn"><img src="~/Content/Images/icon_menu.png" /></div>
+        <div class="logo">
+            <img alt="Viện điều trị ung thư Seiken" src="Content/Images/logo_mobile.png">
+        </div>   
+    </div>*@
+    
+    <!--#endregion-->
+    <div id="menu-top">
+        <div class="main">
+            <ul>
+                @{Html.RenderAction("_MainMenu", "Home_PartialView");}              
+            </ul>
+        </div>
+    </div>   
+    
+</header>

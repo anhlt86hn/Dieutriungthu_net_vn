@@ -1,0 +1,39 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@model PagedList.IPagedList<Rico.Models.GroupPicture>
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_SubLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom col-xs-12 col-sm-12">
+            <ul>
+                <li class='SecondLast'><a href='/'><i class="icon-home" style="font-size: 14px;"></i>Trang chủ</a></li>
+                <li class='Last'><a href='/anh/@Html.Raw(ViewBag.GpTag)'>@Html.Raw(ViewBag.GpName)</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row album">
+        <div class="col-xs-12 col-sm-12 container-wrapper">
+            <h3>@Html.Raw(ViewBag.MenuName)</h3>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+           <div class="col-sx-12 col-sm-4 album-wrapper">
+            <a href="/anh/@Model[i].Tag"><img class="img-responsive img-thumbnail" src="@Model[i].Image" alt="@Model[i].Name" /></a>
+           </div>
+           }
+        </div>       
+        </div>
+
+
+            <div class="row">
+                <div class="paging-wrapper pagedlist-bottom">
+                    @Html.PagedListPager(Model, trang => Url.Action("List", "PictureView", new { trang = trang }), (PagedListRenderOptions)ViewBag.ship)
+                </div>
+            </div>
+        </div>
+       

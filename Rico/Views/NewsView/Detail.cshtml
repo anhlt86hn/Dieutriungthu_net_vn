@@ -1,0 +1,114 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_PostLayout.cshtml";
+}
+<section>
+    <section id="container">
+        <div class="main">
+            <nav id="breadcumds">
+                <ul>
+                    <li><a title="@Html.Raw(ViewBag.tithome)" href="/" itemprop="url"><span itemprop="title">Trang chủ</span></a></li>
+                    <li><a title="@Html.Raw(ViewBag.MenuTitle)" href="@Html.Raw(ViewBag.MenuLink)" itemprop="url"><span itemprop="title">@Html.Raw(ViewBag.MenuName)</span></a></li>
+                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <a href="/baiviet/@Model.Tag" itemprop="url">
+                            <span itemprop="title">@Model.Name</span>
+                        </a>
+                    </li>
+
+
+
+                </ul>
+            </nav>
+
+            @{Html.RenderAction("_PostMenu", "Home_PartialView");}
+
+            <article id="div-article">
+                <div class="blog-share-title">
+
+                    <div class="article_title"><h1>@Model.Name</h1></div>
+                    <div class="addthis_toolbox share">
+                        <div class="custom_images">
+                            <a class="addthis_button_twitter"><img src="~/Content/Images/tweet.png" alt="Share to Twitter" border="0" /></a>
+                            <a class="addthis_button_facebook"><img src="~/Content/Images/face.png" alt="Share to Facebook" border="0" /></a>
+                            <a class="addthis_button_google_plusone_share"><img src="~/Content/Images/google.png" alt="google bookmark" border="0" /></a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="blog-cate-vote">
+                    <div class="ratingblock">
+                        <div id="unit_long45">
+                            <ul id="unit_ul45" class="unit-rating" style="width: 300px;">
+                                <li class="current-rating" style="width: 210px;">Currently 7.00/10</li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=1&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="1 out of 10" class="r1-unit rater" rel="nofollow">1</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=2&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="2 out of 10" class="r2-unit rater" rel="nofollow">2</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=3&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="3 out of 10" class="r3-unit rater" rel="nofollow">3</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=4&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="4 out of 10" class="r4-unit rater" rel="nofollow">4</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=5&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="5 out of 10" class="r5-unit rater" rel="nofollow">5</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=6&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="6 out of 10" class="r6-unit rater" rel="nofollow">6</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=7&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="7 out of 10" class="r7-unit rater" rel="nofollow">7</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=8&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="8 out of 10" class="r8-unit rater" rel="nofollow">8</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=9&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="9 out of 10" class="r9-unit rater" rel="nofollow">9</a></li>
+                                <li><a href="http://benhxahoi.xyz/danh-gia-345?j=10&amp;q=45&amp;t=58.187.160.66&amp;c=10&amp;r=1" title="10 out of 10" class="r10-unit rater" rel="nofollow">10</a></li>
+                            </ul>
+                            <div>
+                                <div itemprop="name" class="title-vote">@Model.Name</div>
+                                <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                                    Điểm trung bình:
+                                    <span itemprop="ratingValue" style="font-weight:800;">7.0</span> /
+                                    <span itemprop="bestRating">10</span> (
+                                    <span itemprop="ratingCount">23</span>  lượt đánh giá )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content_article">
+                    <p>
+                        @Model.Content
+                    </p>
+                    <p>
+                        @Model.Detail
+                    </p>
+                </div>
+                <div class="tuvan">
+                    <a title="Bác sĩ tư vấn" href="http://tuvan.phongkhamthaiha.com/LR/Chatpre.aspx?id=KRI83907310&lng=en" rel="nofollow">
+                    </a>
+                </div>
+                <script>
+				window.fbAsyncInit = function() {
+				FB.init({
+				  appId      : '921274987938356',
+				  xfbml      : true,
+				  version    : 'v2.4'
+				});
+				};
+				(function(d, s, id){
+				 var js, fjs = d.getElementsByTagName(s)[0];
+				 if (d.getElementById(id)) {return;}
+				 js = d.createElement(s); js.id = id;
+				 js.src = "//connect.facebook.net/en_US/sdk.js";
+				 fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+                </script>
+                <div class="fb-comments" data-width="100%" data-href="/baiviet/@Model.Tag" data-numposts="6">
+
+
+                </div>
+            </article>
+
+            <article id="related-news">
+                <p class="title-lienquan">Bài viết liên quan</p>
+                <ul class="blog-related">
+                    @Html.Raw(ViewBag.Str)
+                </ul>
+            </article>
+        </div>
+        <div class="clear"></div>
+    </section>
+</section>

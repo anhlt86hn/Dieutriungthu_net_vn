@@ -1,0 +1,173 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_Layout.cshtml";      
+}
+  
+<article id="content-main"> 
+        <div class="cont1"> <h2>PHÁT HIỆN BỆNH UNG THƯ Ở GIAI ĐOẠN MUỘN CÓ THỂ CHỮA KHỎI HAY KHÔNG?</h2> 
+        <p class="details">Các phương pháp điều trị ung thư cổ điển vẫn không cải thiện được tỉ lệ sống sót thật sự</p> 
+        <img src="~/Content/Images/cothekhong.png" /> 
+        <p class="desc"> 
+            Bạn sẽ nhận được những gì với những phương pháp điều trị ung thư cũ? </p> </div> 
+        <div class="truonghop"> 
+        <div class="main"> 
+            <div class="col"> <img src="~/Content/Images/truonghop1.png" /> <p>Hệ miễn dịch suy giảm nghiêm trọng</p> 
+            <p> Tác dụng phụ không mong muốn của các phương pháp điều trị cũ, phá hủy cả các tế bào khỏe mạnh</p> </div> 
+            
+            <div class="col"> <img src="~/Content/Images/truonghop2.png" /> <p>Không cải thiện được chất lượng cuộc sống của bệnh nhân</p> 
+            <p> Luôn phải nằm viện và không còn thời gian cho những việc khác trong cuộc sống</p> </div> 
+            
+            <div class="col">
+                <img src="~/Content/Images/truonghop3.png" /><p>Tái phát nhiều</p>
+                <p> Hạn chế của các phương pháp điều trị cũ, không thể tiêu diệt dứt điểm các tế bào gây bệnh</p>
+            </div> 
+            
+            <div class="col">
+                <img src="~/Content/Images/truonghop4.png" /> <p>Vẫn không thể thoát khỏi cái chết</p>
+                <p> Giới hạn trong hiệu quả chữa trị của các phương pháp cũ</p>
+            </div> 
+            <div class="clear"></div> 
+            </div> 
+        </div> 
+        
+        <div class="phuongphap"> 
+            <div class="main"> 
+                <h3 style="color:red;">PHƯƠNG PHÁP ĐIỀU TRỊ UNG THƯ BẰNG MIỄN DỊCH TẾ BÀO AICT</h3> 
+                <p style="font-size:15px;color:#0294a5;text-transform:uppercase;text-align:center;">PHƯƠNG PHÁP ĐIỀU TRỊ UNG THƯ MỚI NHẤT VÀ HIỆU QUẢ NHẤT HIỆN NAY</p> 
+                <p style="font-size:14px;color:black;text-transform:uppercase;text-align:center;">Công nghệ điều trị ung thư của Viện Điều trị ung thư Seiken, Nhật Bản</p>
+                
+                <div class="row-odd"> 
+                <div class="bacsi"> <img src="~/Content/Images/pic6.png" atl="A1" /> </div> 
+                <div class="desc"> <p>NGĂN CHẶN HOÀN TOÀN NGUY CƠ TÁI PHÁT UNG THƯ</p> <p>98% không tái phát sau điều trị</p> 
+                    <p>abc...</p> 
+                    </div> 
+                <div class="clear"></div> 
+                </div> 
+                <div class="row-even">                 
+                <div class="desc"> 
+                <p>AN TOÀN TUYỆT ĐỐI, KHÔNG CÓ TÁC DỤNG PHỤ</p> 
+                    <p>abc.</p> 
+                <p>abc</p> 
+                </div> 
+                <div class="bacsi"> <img src="~/Content/Images/pic7.png" atl="A2" /> </div> 
+                <div class="clear"></div> 
+                </div> 
+                
+                <div class="row-odd"> 
+                <div class="bacsi"> <img src="~/Content/Images/pic8.jpg" atl="A3" /> </div> 
+                <div class="desc"> <p>KHÔNG ẢNH HƯỞNG ĐẾN CHẤT LƯỢNG CUỘC SỐNG CỦA BỆNH NHÂN</p> 
+                    <p>Bạn sẽ không phải luôn túc trực nằm viện</p> 
+                    <p>Bệnh nhân hoàn toàn có thể vừa điều trị, vừa sinh hoạt và làm việc bình thường.</p> 
+                    </div> 
+                <div class="clear"></div> 
+                </div> 
+                
+               
+    </div> 
+    </div>
+    </article>   
+<article class="new-article">
+        <div class="main">
+            <h3>Bài Viết Mới Nhất</h3>
+            <ul class="news-item">
+                <li>
+                    <div class="news-img" style="float:left;"><a class="link-image" href="/" title="ABC"><img src="~/Content/Images/news-thumb.png"><div class="hover"></div></a></div><div class="news-title"><h4><a href="/" title="ABC">ABC</a></h4></div><div class="news-details">
+                        <p>
+                            ABC
+                        </p>
+                    </div><div class="clear"></div>
+                </li>
+                <li>
+                    <div class="news-img" style="float:left;"><a class="link-image" href="/" title="ABC"><img src="~/Content/Images/news-thumb.png"><div class="hover"></div></a></div><div class="news-title"><h4><a href="/" title="ABC">ABC</a></h4></div><div class="news-details">
+                        <p>
+                            ABC
+                        </p>
+                    </div><div class="clear"></div>
+                </li>
+               
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </article>
+<section id="thematic">
+    <style type="text/css" media="screen">
+				#cd-ldpage h3{text-align:center;clear:both;text-transform:uppercase;font-size:20px;color:#101010;padding: 20px 0 20px 0;}
+				#cd-ldpage h3 span{border-bottom:3px #E76060 solid;display:block;width:90%; max-width:340px;margin:0 auto;padding:5px 0;}
+				#cd-ldpage .body-cd{
+					padding: 40px 0;
+					background: url("/Content/Images/shadow_top1.png") repeat-x scroll center top, url("/Content/Images/shadow_bottom1.png") repeat-x scroll center bottom #f1f1f1;
+				}
+				#cd-ldpage .main{max-width:980px;text-transform:uppercase;}
+				#cd-ldpage .body-cd span{display:block;text-align:center;padding:6px 0;width:90%;margin:0 auto;color:#fff;}
+				#cd-ldpage .body-cd span.cd{background: url("/Content/Images/line3.png") no-repeat bottom center;padding-top:25px;}
+				#cd-ldpage .body-cd .doc span.cd{padding-top:66px;}
+				#cd-ldpage .cd-cols{width:23%;float:left;margin:1%;padding:0;min-height:115px;display:block;opacity:0.8;transition:0.5s all ease}
+				#cd-ldpage .cd-cols:hover{opacity:1}
+				#cd-ldpage .cd-cols:nth-child(1){background:#D06191}
+				#cd-ldpage .cd-cols:nth-child(2){background:#F2B166}
+				#cd-ldpage .cd-cols:nth-child(3){background:#91B27F}
+				#cd-ldpage .cd-cols:nth-child(4){background:#00A89E}
+			@@media screen and (max-width:800px){
+				#cd-ldpage .body-cd .main{width:98%; max-width:480px;margin:0 auto}
+				#cd-ldpage .body-cd .doc span.cd{padding-top: 18px;}
+				#cd-ldpage .cd-cols{width:48%;float:left;margin:1%;padding:0;min-height:115px;}
+			}
+    </style>
+    @*<div id="cd-ldpage">
+        <h3 class="cd-title"><span>Các chuyên đề bệnh xã hội</span></h3>
+        <div class="body-cd">
+            <div class="main">
+                <a class="cd-cols" href="/chuyen-de/sui-mao-ga/" title="Chuyên đề Sùi Mào Gà">
+                    <span class="cd">Chuyên đề</span>
+                    <span>Sùi mào gà</span>
+                </a>
+                <a class="cd-cols" href="/chuyen-de/benh-lau/" title="Chuyên đề Bệnh Lậu">
+                    <span class="cd">Chuyên đề</span>
+                    <span>Bệnh Lậu</span>
+                </a>
+                <a class="cd-cols" href="/chuyen-de/benh-giang-mai/" title="Chuyên đề Bệnh Giang Mai">
+                    <span class="cd">Chuyên đề</span>
+                    <span>Bệnh Giang Mai</span>
+                </a>
+                <a class="cd-cols" href="/chuyen-de/mun-rop-sinh-duc/" title="Chuyên đề Mụn Rộp Sinh Dục">
+                    <span class="cd">Chuyên đề</span>
+                    <span>Mụn Rộp Sinh Dục</span>
+                </a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>*@
+</section>
+
+<section id="box-comment">
+    <div class="main" style="text-align:center">
+        <!-- Comment fb -->
+        <script>
+				window.fbAsyncInit = function() {
+				FB.init({
+				  appId      : '921274987938356',
+				  xfbml      : true,
+				  version    : 'v2.4'
+				});
+				};
+
+				(function(d, s, id){
+				 var js, fjs = d.getElementsByTagName(s)[0];
+				 if (d.getElementById(id)) {return;}
+				 js = d.createElement(s); js.id = id;
+				 js.src = "//connect.facebook.net/en_US/sdk.js";
+				 fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+        </script>
+        <img src="~/Content/Images/tuvan_facebook.png" style="width:98%; max-width:948px;" />
+        <div class="fb-comments" data-width="100%" data-href="http://dieutriungthu.net.vn/" data-numposts="6"></div>
+        <!-- End Comment fb -->
+        <div class="clear"></div>
+    </div>
+</section>

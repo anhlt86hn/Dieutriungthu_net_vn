@@ -1,0 +1,310 @@
+﻿@{
+    ViewBag.Title = "Thêm ảnh";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Scripts
+{
+    <!-- #region validate -->
+        <script type="text/javascript">
+
+            (function ($, W, D) {
+
+                var JQUERY4U = {};
+
+                JQUERY4U.UTIL =
+                {
+                    setupFormValidation: function () {
+                        //validation rules
+                        $("#formPicture").validate({
+                            rules: {
+                                Cat: "required",
+                                Name: "required",
+                                Image: "required",
+                                Ord: {
+                                    required: true,
+                                    number: true
+                                },
+                            },
+                            messages: {
+                                Cat: "Phải chọn Danh Mục ảnh",
+                                Name: "Phải nhập tên ảnh",
+                                Image: "Phải nhập nguồn ảnh",
+                                Ord: {
+                                    required: "Phải nhập thứ tự",
+                                    number: "Phải nhập kiểu số",
+                                },
+                            },
+                            submitHandler: function (form) {
+                                form.submit();
+                            }
+                        });
+                    }
+                }
+
+                //when the dom has loaded setup form validation rules
+                $(D).ready(function ($) {
+                    JQUERY4U.UTIL.setupFormValidation();
+                });
+
+            })(jQuery, window, document);
+        </script>
+        <!-- #endregion -->   
+    <!-- #region ckfinder -->
+        <script type="text/javascript">
+        $(function () {
+            $("#SelectImage").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#Image").val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+        </script>
+       <!-- #endregion -->
+    <!--#region ckeditor-->
+@*<script type="text/javascript">
+        var editor;
+        function createEditor(languageCode, id) {
+            var editor = CKEDITOR.replace(id, {
+                language: languageCode
+            });
+        }
+        $(function () {
+            createEditor('vi', 'Description');
+        });
+    </script>*@
+<!--#endregion-->
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">             
+        <!--#region breadcrumb-->
+                <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+                    <ul>
+                        <li><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                        <li class='SecondLast'><a href='/admin/anh'>Ảnh</a></li>
+                        <li class='Last'><span>Thêm mới Ảnh</span></li>
+                    </ul>
+                </div> 
+        <!--#endregion-->
+        <!--#region clear-->
+                <div style="clear: both;">
+                </div>
+                <!--#endregion-->
+
+        @using (Html.BeginForm("Create", "Picture", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formPicture", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">                
+         <!-- #region save nav -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Thêm mới Ảnh</h4>
+
+                        <!-- Button -->
+                        @Html.Partial("_SaveNav")
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4><i class="icon-reorder"></i>&nbsp;Thêm mới Ảnh</h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_SaveNav")
+
+                            </div>
+                        </div>
+
+                    </div>
+                   <!--#endregion-->  
+                                   
+         <div class="widget-body">
+                        <div id="tabs">
+                            <div id="tabs-1">
+
+                                <table class="admintable" style="width: 100%;">
+                                    <!--#region Cat-->
+                                    <tr>
+                                        <td class="key">
+                                            Nhóm ảnh <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("Cat", " === Chọn Danh Mục ===")
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Tên nhóm ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Tên nhóm ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region name-->
+                                    <tr>
+                                        <td class="key">Tên ảnh <span class="Required">*</span></td>
+                                        <td>
+                                            @Html.TextBox("Name", "", new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Tên ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Tên của ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region image-->
+                                    <tr>
+                                        <td class="key">Upload ảnh <span class="Required">*</span></td>
+                                        <td>
+                                            @Html.TextBox("Image", "", new { @class = "text", style = "width:1250px" }) &nbsp;
+                                            <input id="SelectImage" type="button" value="Chọn ảnh" />
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Upload ảnh từ nguồn nào
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Upload ảnh từ nguồn nào
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region ord-->
+                                    <tr>
+                                        <td class="key">Thứ tự <span class="Required">*</span></td>
+                                        <td>
+                                            @Html.TextBox("Ord", "", new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Thứ tự ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Thứ tự ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region width-->
+                                    <tr>
+                                        <td class="key">Độ rộng ảnh</td>
+                                        <td>
+                                            @Html.TextBox("Width", "", new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Độ rộng ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Độ rộng của ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region height-->
+                                    <tr>
+                                        <td class="key">Chiều cao ảnh</td>
+                                        <td>
+                                            @Html.TextBox("Height", "", new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Chiều cao ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Chiều cao của ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region place-->
+                                    <tr>
+                                        <td class="key">Địa điểm</td>
+                                        <td>
+                                            @Html.TextBox("Place", "", new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Địa điểm
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Địa điểm
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region index-->
+                                    <tr>
+                                        <td class="key">
+                                            Trang chủ
+                                        </td>
+                                        <td>
+                                            @Html.CheckBox("Index", true)
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Trang chủ
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Trang chủ
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+                                    <!--#region active-->
+                                    <tr>
+                                        <td class="key">
+                                            Kích hoạt
+                                        </td>
+                                        <td>
+                                            @Html.CheckBox("Active", true)
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Kích hoạt
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Kích hoạt
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--#endregion-->
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+

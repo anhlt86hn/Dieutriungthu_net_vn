@@ -1,0 +1,278 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model PagedList.IPagedList<Rico.Models.Member>
+
+
+@{
+    ViewBag.Title = "Quản lý thành viên văn phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles
+{
+    <!--Sử dụng cho Confirm delete-->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <!--Sử dụng cho autocomplete-->
+
+    @*<link href="../../Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />*@
+
+<!--Phân trang-->
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+}
+
+@section Scripts
+{
+    
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <!--Sử dụng cho Confirm delete-->
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+@*<script src="~/Scripts/jquery-1.7.1.js"></script>*@
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.easy-confirm-dialog.js"></script>
+    
+<script type="text/javascript">
+        $(document).ready(function () {
+            $(".deletemultiple").easyconfirm({
+                locale: { title: 'Xóa nhiều', button: ['Không', 'Có'] }
+            });
+        })
+</script>
+
+    <!-- #region load amount-->
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#ddlMemberAmount').change(function () {
+                var memberAmount = $(this).val();
+                var sortName = '@ViewBag.CurrentSortName';
+                $.post("/Member/LoadMemberAmount", { "memberAmount": memberAmount, "sortName": sortName },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+        });
+</script>
+<!--#endregion-->
+
+    <!--Sử dụng cho autocomplete-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('*[data-autocomplete-url]')
+        .each(function () {
+            $(this).autocomplete({
+                source: $(this).data("autocomplete-url")
+            });
+        });
+        });
+    </script>
+
+    <!--Reset ô tìm kiếm-->
+    <script type="text/javascript">
+        $(function () {
+            $('#MemberName').focus(function () {
+                $(this).val('');
+            });
+        });
+    </script>
+
+    <!--Ajax sử dụng sửa dữ liệu trực tiếp trên form-->
+    @*<script type="text/javascript">
+
+        $(function () {
+            $('#msg').hide();
+
+            // Ajax sử dụng cho change Username
+            $(".Username").change(function () {
+                var mId = $(this).attr("id");
+                var Username = $(this).val();
+                if (Username != "") {
+                    clearUpdateMessage();
+                    $.post("/Member/UpdateDirect", { "id": mId, "Username": Username },
+                        function (data) {
+                            // Thay đổi thành công
+                            $('#msg').show();
+                            $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                            $('#msg').fadeOut(5000);
+                        });
+                } else {
+                    // Báo lỗi nhập dữ liệu
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập Tên đăng nhập(UserName)");
+                    $('#msg').fadeOut(5000);
+                }
+            });
+
+            // Ajax sử dụng cho change Password
+            $(".Password").change(function () {
+                var mId = $(this).attr("id");
+                var Password = $(this).val();
+                if (Password != "") {
+                    clearUpdateMessage();
+                    $.post("/Member/UpdateDirect", { "id": mId, "Password": Password },
+                        function (data) {
+                            // Thay đổi thành công
+                            $('#msg').show();
+                            $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                            $('#msg').fadeOut(5000);
+                        });
+                } else {
+                    // Báo lỗi nhập dữ liệu
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập Mật khẩu đăng nhập (Password)");
+                    $('#msg').fadeOut(5000);
+                }
+            });
+
+            // Ajax sử dụng cho change Tel
+            $(".Tel").change(function () {
+                var mId = $(this).attr("id");
+                var Tel = $(this).val();
+                if (Tel != "") {
+                    clearUpdateMessage();
+                    $.post("/Member/UpdateDirect", { "id": mId, "Tel": Tel },
+                        function (data) {
+                            // Thay đổi thành công
+                            $('#msg').show();
+                            $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                            $('#msg').fadeOut(5000);
+                        });
+                } else {
+                    // Báo lỗi nhập dữ liệu
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập số điện thoại");
+                    $('#msg').fadeOut(5000);
+                }
+            });
+
+            // Ajax sử dụng cho change Email
+            $(".Email").change(function () {
+                var mId = $(this).attr("id");
+                var Email = $(this).val();
+                if (Email != "") {
+                    clearUpdateMessage();
+                    $.post("/Member/UpdateDirect", { "id": mId, "Email": Email },
+                        function (data) {
+                            // Thay đổi thành công
+                            $('#msg').show();
+                            $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                            $('#msg').fadeOut(5000);
+                        });
+                } else {
+                    // Báo lỗi nhập dữ liệu
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập địa chỉ Email");
+                    $('#msg').fadeOut(5000);
+                }
+            });
+
+            // Ajax sử dụng cho change ord
+            $(".Name").change(function () {
+                var mId = $(this).attr("id");
+                var name = $(this).val();
+                if (name != "") {
+                    clearUpdateMessage();
+                    $.post("/Member/UpdateDirect", { "id": mId, "Name": name },
+                        function (data) {
+                            // Thay đổi thành công
+                            $('#msg').show();
+                            $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                            $('#msg').fadeOut(5000);
+                        });
+                } else {
+                    // Báo lỗi nhập dữ liệu
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập tên thành viên.");
+                    $('#msg').fadeOut(5000);
+                }
+            });
+
+        });
+
+        function clearUpdateMessage() {
+            $('#update-message').text("");
+        }
+
+        function htmlDecode(value) {
+            if (value) {
+                return $('<div />').html(value).text();
+            }
+            else {
+                return '';
+            }
+        }
+
+    </script>*@
+
+<script type="text/javascript">
+    $(function () {
+        $(".alert").hide();
+    });
+</script>
+
+ 
+
+}
+
+@using (Html.BeginForm("MultiCommand", "Member", FormMethod.Post))
+{
+    <div class="container-fluid">
+        <div style="width: 100%; margin: 0 auto;">
+            <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+                <ul>
+                    <li class='SecondLast'><a href='~/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang chủ</a></li>
+                    <li class='Last'><a href='~/admin/thanh-vien'>Thành viên</a></li>
+                </ul>
+            </div>
+            <div style="clear: both;"></div>
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <div class="widget-title">
+                        <h4><i class="icon-list-alt"></i>&nbsp;Thành viên</h4>
+                        @Html.Partial("_RightNav")
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-list-alt"></i>&nbsp;Thành viên
+                            </h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_RightNav")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+
+                        <div class="row-fluid">
+                            <!-- #region load amount-->
+                            <div class="span3">
+                                <div id="sample_1_length" class="dataTables_length">
+                                    @Html.DropDownList("ddlMemberAmount", null, new { style = "width:180px;" })
+                                </div>
+                            </div>
+                            <!--#endregion-->
+                             <!--Tìm kiếm thành viên-->
+                            <div class="span9 form-search pull-right text-right">
+
+                                @Html.TextBox("MemberName", ViewBag.CurrentFilter as string, new { data_autocomplete_url = Url.Action("Autocomplete"), @Value="Nhập thành viên", @Style="color:#999999;", @id="MemberName" })
+
+                                <button type="submit" id="btnSearch" name="btnSearch" class="btn"><i class="icon-filter"></i>Tìm kiếm</button>
+
+                            </div>
+
+                        </div>
+                        
+                        @{Html.RenderPartial("_Data", Model);}
+                       
+
+                       
+                     
+                            <div style="clear: both;">
+
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}

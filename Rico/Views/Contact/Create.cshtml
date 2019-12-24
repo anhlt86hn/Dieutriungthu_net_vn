@@ -1,0 +1,197 @@
+﻿@model Rico.Models.Contact
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_ContactLayout.cshtml";
+    var img = new CaptchaProvider().CreateCaptcha();
+}
+@section Scripts
+{
+<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+        var editor;
+        function createEditor(languageCode, id) {
+            var editor = CKEDITOR.replace(id, {
+                language: languageCode
+            });
+        }
+
+        $(function () {
+            createEditor('vi', 'Content');
+        });
+
+</script>
+<!-- Validate Data -->
+<script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#formContact").validate({
+                        rules: {
+                            Name:
+                                {
+                                    required:true,
+                                },
+                            Title: "required",
+                            Email: "required",
+                            Content: "required",                            
+                            Phone: {
+                                required: true,
+                                number: true
+                            },
+                            Captcha: { required: true },
+                        },
+                        messages: {
+                            Name: "Phải nhập tên",
+                            Title: "Phải nhập tiêu đề",
+                            Email: "Phải nhập email",
+                            Content: "Phải nhập nội dung",
+                            Phone: {
+                                required: "Phải nhập số điện thoại",
+                                number: "Phải nhập kiểu số",
+                            },
+                            Captcha: { required: "Phải nhập mã an toàn" },
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+            
+                   
+        })(jQuery, window, document);
+       
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $("#Captcha").change(function () {
+            var Captcha = $(this).val();
+            if (Captcha != "") {
+                $.post("/Contact/Capcha", { "captcha": Captcha },
+                    function (data) {
+                        $("#capcha").html(data);
+                    });
+            }
+            else {
+                $.post("/Contact/Capcha", { "mail": Email },
+                   function (data) {
+                       $("#capcha").html(data);
+                   });
+            }
+        });
+    });
+    </script>
+
+}
+<div class="wrap bg4" data-uk-scrollspy="{cls:'sc', delay:1000}">
+    <div class="main">
+        <div class="cols4">
+            <div class="col">
+                <img src="~/Content/images/icon1_lienhe.png" alt="" />
+                <div class="upb">Đội ngũ bác sĩ giỏi</div>
+                <div class="colc">Đội ngũ bác sĩ nhiều năm kinh nghiệm. Có những bác sĩ đã từng tu nghiệp tại các nước có nền y học phát triển.</div>
+            </div>
+            <div class="col">
+                <img src="~/Content/images/icon2_lienhe.png" alt="" />
+                <div class="upb">Trang thiết bị hiện đại</div>
+                <div class="colc">Trang thiết bị hiện đại, được nhập khẩu từ các nước tiên tiến cho kết quả nhanh và chính xác.</div>
+            </div>
+            <div class="col">
+                <img src="~/Content/images/icon3_lienhe.png" alt="" />
+                <div class="upb">Kỹ thuật tiên tiến</div>
+                <div class="colc">Áp dụng kỹ thuật tiên tiến chữa trị hiệu quả các bệnh ung thư.</div>
+            </div>
+            <div class="col">
+                <img src="~/Content/images/icon4_lienhe.png" alt="" />
+                <div class="upb">Hoạt động liên tục</div>
+                <div class="colc">Hoạt động liên tục 365 ngày để phục vụ bệnh nhân. Ngoài ra còn nhận khám ngoài giờ hành chính nếu có hẹn trước.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap bg5">
+    <div class="main">
+        <div class="dangtrai">
+            <ul>
+                <li><div class="upb">Ưu đãi lớn</div>Miễn phí đăng ký và giảm 30% chi phí tiểu phẫu, chi phí trị liệu khi đăng ký khám trực tuyến.<div class="liim block"><img src="~/Content/images/arrow_lienhe.png" alt="" /></div></li>
+                <li><div class="upb">Thủ tục nhanh chóng</div>Sau khi đăng ký , bạn không cần phải xếp hàng khi đến khám và được bác sĩ sắp xếp khám nhanh.<div class="liim block"><img src="~/Content/images/arrow_lienhe.png" alt="" /></div></li>
+                <li><div class="upb">Khám ngoài giờ làm việc</div>Ngoài giờ làm việc chính nếu bạn hẹn khám chúng tôi vẫn phục vụ sắp xếp lịch khám cho bạn.<div class="liim block"><img src="~/Content/images/arrow_lienhe.png" alt="" /></div></li>
+                <li><div class="upb">Bảo mật thông tin</div>Thông tin đăng ký của bệnh nhân luôn được bảo mật và phục vụ vào mục đích khám chữa bệnh.<div class="liim block"><img src="~/Content/images/arrow_lienhe.png" alt="" /></div></li>
+                <li><div class="upb">Hoạt động 365 ngày/năm </div>Bệnh viện làm việc từ: 8h00 – 18h00 tất cả các ngày trong tuần. (Kể cả ngày lễ tết)<div class="liim block"><img src="~/Content/images/arrow_lienhe.png" alt="" /></div></li>
+            </ul>
+        </div>
+        <div class="dangphai">
+    <div class="upb">Liên hệ - Phản hồi</div>
+    <p>vui lòng nhập các ô bên dưới</p>
+    @using (Html.BeginForm("Create", "Contact", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formContact", @class = "validate-form" }))
+            {
+        <div>
+            @Html.TextBox("Name", "", new { @class = "text", style = "width:92%", @id = "Name", @placeholder = "Họ tên" })
+            </div>
+            <div>
+                @Html.TextBox("Phone", "", new { @onkeypress = "OnlyInputNumber(0)", style = "width:92%", @id = "Phone", @placeholder = "Điện thoại" })
+            </div>
+
+            <div>
+                @Html.TextBox("Email", "", new { @class = "text", style = "width:92%", @id = "Email", @placeholder = "Email" })
+                </div>
+                <div>
+                    @Html.TextBox("Address", "", new { @class = "text", style = "width:92%", @id = "Address", @placeholder = "Địa chỉ" })
+
+                </div>
+                <div>
+                    @Html.TextBox("Title", "", new { @class = "text", style = "width:92%", @id = "Title", @placeholder = "Tiêu đề" })
+
+                </div>
+                <div>
+                    @Html.TextArea("Content", "", new { @class = "text", @id = "Content", @placeholder = "Nội dung" })
+
+                </div>
+                <div class="captcha">
+                    @Html.TextBox("Captcha","", new { @class = "text", @id = "Captcha", @placeholder = "Điền mã an toàn" })
+                    <img class="imcapt" src="@img" />@*<a href="@this.Request.Url.AbsoluteUri" class="reloadCaptcha"><span class="capcha">Khác</span></a>*@
+                </div>
+                <div><input id="popup" class="gui" name="submit" type="submit" value="Gửi" /></div>
+                @*<div><input id="sdt" name="sdt" type="text" placeholder="Số điện thoại" required /></div>
+                <div><input id="mail" name="mail" type="text" placeholder="Email liên lạc" required /></div>
+                <div><textarea name="benh" rows="6" cols="40" placeholder="Triệu chứng bệnh"></textarea></div>
+                <div><input name="ngay" type="text" placeholder="Ngày đăng ký khám" class="datepicker" required /></div>
+                <div class="captcha"><input id="captcha1" name="captcha" type="text" placeholder="Nhập mã xác nhận" required /> <img src="captcha.php" class="imcapt" /></div>
+                <div><input id="popup" class="gui" name="submit" type="button" value="gửi đăng ký khám" /></div>*@
+                }
+            </div>
+    </div>
+</div>
+
+<div class="wrap bg6">
+    @*<div class="duongdi">Đường đi tới Seiken</div>
+    <p style="text-align: center;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7449.10055603251!2d105.82231!3d21.010657!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab7df05695cf%3A0x8febb466b349294d!2zMTEgVGjDoWkgSMOgLCBUcnVuZyBMaeG7h3QsIMSQ4buRbmcgxJBhLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1430989225131" width="100%" height="350" frameborder="0" style="border:0"></iframe>
+    </p>*@
+    <div class="bn6">
+        <a href="/" title="Bác sĩ tư vấn" rel="nofollow"></a>
+    @*<a href="http://tuvan.phongkhamthaiha.com/LR/Chatpre.aspx?id=KRI83907310&lng=en" title="Bác sĩ tư vấn" rel="nofollow"></a>*@
+    </div>
+</div>
+
+
+         
+      

@@ -1,0 +1,356 @@
+﻿@model Rico.Models.Price
+@{
+    ViewBag.Title = "Chỉnh sửa Báo giá";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Scripts
+{
+     <!-- Validate Data -->
+    <script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#Priceedit-form").validate({
+                        rules: {
+                            Name: "required",
+                            Tag: "required",
+                            Ord: {
+                                required: true,
+                                number: true
+                            }
+                        },
+                        messages: {
+                            Name: "Phải nhập tên",
+                            Title: "Phải nhập tag",
+                            Ord: {
+                                required: "Phải nhập thứ tự",
+                                number: "Phải nhập kiểu số"
+                            }
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+
+        })(jQuery, window, document);
+    </script>
+    <!-- End Validate Data -->
+
+<script type="text/javascript">
+        var editor;
+        function createEditor(languageCode, id) {
+            var editor = CKEDITOR.replace(id, {
+                language: languageCode
+            });
+        }
+        $(function () {
+            createEditor('vi', 'Detail');
+        });
+</script>
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">
+
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+            <ul>
+                <li><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                <li class='SecondLast'><a href='/admin/bao-gia'>Báo giá</a></li>
+                <li class='Last'><span>Sửa Báo giá</span></li>
+            </ul>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        @using (Html.BeginForm("Edit", "Price", new { id = @Model.Id }, FormMethod.Post, new { @id = "Priceedit-form", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <!-- widget-title -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Sửa Báo giá</h4>
+
+                        <!-- Button -->
+                        @Html.Partial("_SaveNav")
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-reorder"></i>&nbsp;Sửa Báo giá</h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_SaveNav")
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-title -->
+
+                    <!-- widget-body -->
+                    <div class="widget-body">
+                       
+                        <div id="tabs">
+                            <div id="tabs-1">
+                                @Html.HiddenFor(m => m.Id)
+                                <table class="admintable" style="width: 100%;">
+
+                                    <tr>
+                                        <td class="key">Tên Báo giá<span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "text", style = "width:970px;" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Tên Báo giá
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Tên Báo giá
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">
+                                            Tag<span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Tag, new { @class = "text", style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Tag
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Tag
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">
+                                            Giá<span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Quote, new { @class = "text", style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Giá
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Giá
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                           Khuyến mại 1
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Promotion1", new { @style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Khuyến mại 1
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Khuyến mại 1
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Khuyến mại 2
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Promotion2", new { @style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Khuyến mại 2
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Khuyến mại 2
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Album
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Album", new { @style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Album
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Album
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Ảnh lớn
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("BigPhoto", new { @style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Ảnh lớn
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Ảnh lớn
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Váy
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Dress", new { @style = "width:970px;" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Váy
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Váy
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                 
+                                    <tr>
+                                        <td class="key">
+                                            Nội dung chi tiết
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Detail")
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Nội dung chi tiết
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Nội dung chi tiết
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    @*<tr>
+                                        <td class="key">
+                                            Tag<span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Tag, new { @class = "text" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Tag Báo giá
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Tag Báo giá
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>*@
+                                  
+                                    <tr>
+                                        <td class="key">Thứ tự <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Ord, new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Thứ tự
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Thứ tự
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">
+                                            Kích hoạt
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.Active)
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Kích hoạt
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Kích hoạt
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    @*<tr style="display: none">
+                                        <td class="key">Ưu tiên <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.Priority)
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Ưu tiên
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Ưu tiên
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>*@                                   
+
+                                
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-body -->
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

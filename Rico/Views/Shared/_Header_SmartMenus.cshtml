@@ -1,0 +1,52 @@
+﻿<header>      
+    <div class="logo">
+        <div class="row-fluid">
+            @{Html.RenderAction("_Logo", "Home_PartialView");}
+        </div>
+    </div>
+             
+     <div class="main-menu">
+                    <div class="row-fluid">
+                        <nav class="navbar navbar-default">
+                            @*<nav class="navbar navbar-default navbar-fixed-top">*@
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+
+                                    @*<a class="navbar-brand" href="#">
+                            <img alt="Brand" src="~/Content/Images/logoimg.png" />
+                        </a>*@
+
+                                </div>
+                                <div id="navbar" class="navbar-collapse collapse">
+                                    <ul id="menu" class="nav navbar-nav sm sm-blue">
+                                        @{Html.RenderAction("_MainMenu", "Home_PartialView");}
+                                    </ul>
+
+                                    @*<ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+                            <li><a href="../navbar-static-top/">Static top</a></li>
+                            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+                        </ul>*@
+                                </div><!--/.nav-collapse -->
+                            </div><!--/.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+    
+                @*<div class="col-sm-4 fll">
+                    <div class="search-box">
+                        <form action="/" method="GET">
+                            <input name="s" placeholder="Nhập từ khóa" type="text">
+                            <button><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>*@          
+</header>
+       
+        

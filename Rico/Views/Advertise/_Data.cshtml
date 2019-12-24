@@ -1,0 +1,299 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using System.Web.Mvc;
+@using System.Web.Mvc.Ajax;
+@using Webdiyer.WebControls.Mvc;
+
+@model PagedList.IPagedList<Rico.Models.sp_Advertise_GetByAll_Result>
+
+<!--Sử dụng cho Confirm delete-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".yesno").easyconfirm({
+            locale: { title: 'Xóa', button: ['Không', 'Có'] }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".alert").hide();
+    
+        $(document).on("change", ".name", function () {
+            var id = $(this).attr('id');
+            var name = $(this).val();
+            if (name != "") {
+                $.post("/Advertise/UpdateDirect", { "id": id, "name": name },
+                    function (data) {
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);
+                    });
+            }
+            else {
+                $(".alert").replaceWith("<div class='alert alert-error'>" + "Phải nhập đầy đủ dữ liệu." + "</div>");
+                $(".alert").fadeOut(5000);
+            }
+        });
+
+        $(document).on("change", ".ord", function () {
+            var id = $(this).attr('id');
+            var ord = $(this).val();
+            if (ord != "") {
+                $.post("/Advertise/UpdateDirect", { "id": id, "ord": ord },
+                    function (data) {
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);
+                    });
+            }
+            else {
+                $(".alert").replaceWith("<div class='alert alert-error'>" + "Phải nhập đầy đủ dữ liệu." + "</div>");
+                $(".alert").fadeOut(5000);
+            }
+        });
+      
+        $(document).on("change", ".height", function () {
+            var id = $(this).attr('id');
+            var height = $(this).val();
+            if (height != "") {
+                $.post("/Advertise/UpdateDirect", { "id": id, "height": height },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(2000);
+                });
+            }
+            else {
+                $(".alert").replaceWith("<div class='alert alert-error'>" + "Phải nhập đầy đủ dữ liệu." + "</div>");
+                $(".alert").fadeOut(5000);
+            }
+        });
+ 
+        $(document).on("change", ".width", function () {
+            var id = $(this).attr('id');
+            var width = $(this).val();
+            //alert(width);
+            if (width != "") {
+                $.post("/Advertise/UpdateDirect", { "id": id, "width": width },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(2000);
+                });
+            }
+            else {
+                $(".alert").replaceWith("<div class='alert alert-error'>" + "Phải nhập đầy đủ dữ liệu." + "</div>");
+                $(".alert").fadeOut(5000);
+            }
+        });
+
+        $(document).on("change", ".link", function () {
+            var id = $(this).attr('id');
+            var link = $(this).val();
+            if (link != "") {
+                $.post("/Advertise/UpdateDirect", { "id": id, "link": link },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(2000);
+                });
+            }
+            else {
+                $(".alert").replaceWith("<div class='alert alert-error'>" + "Phải nhập đầy đủ dữ liệu." + "</div>");
+                $(".alert").fadeOut(5000);
+            }
+        });
+
+        $(document).on("click", ".active", function () {
+            var id = $(this).attr('id');
+            $.post("/Advertise/UpdateDirect", { "id": id },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(2000);
+                });
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var currentSortOrd = '@ViewBag.CurrentSortOrd';
+        if (currentSortOrd == "thu-tu-tang-dan") {
+            $('#ord').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+        }
+        else {
+            $('#ord').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+        }
+
+
+        var currentSortName = '@ViewBag.CurrentSortName';
+        if (currentSortName == "name asc") {
+            $('#name').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+        }
+        else {
+            $('#name').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+        }
+    })
+</script>
+
+<!--Sử dụng cho sắp xếp-->
+<script type="text/javascript">
+    $(function () {
+        ///
+        $(document).on("click", "#lbSortOrd", function () {
+            ///your code
+            var getSortOrd = $("#lbSortOrd").attr('thutu');
+            ///
+            jQuery.ajax({
+                url: '@Url.Action("Index", "Advertise")',
+                type: 'Post',
+                contentType: 'application/json',
+                data: JSON.stringify({ thutu: getSortOrd }),
+                success: function (result) {
+                    $('#DataTable').html(result);
+                }
+            });
+            ///
+        });
+        ///
+    });
+
+
+
+    $(function () {
+        ///
+        $(document).on("click", "#SortName", function () {
+            ///your code
+            var getSortName = $("#SortName").attr('sortName');
+            var positionSearch = $('#sllPosition').val();
+            ///
+            jQuery.ajax({
+                url: '@Url.Action("Index", "Advertise")',
+                type: 'Post',
+                contentType: 'application/json',
+                data: JSON.stringify({ sortName: getSortName, positionSearch: positionSearch }),
+                success: function (result) {
+                    $('#DataTable').html(result);
+                }
+            });
+            ///
+        });
+        ///
+    });
+
+</script>
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Ajax sử dụng sắp xếp theo tên
+        $('#name').click(function () {
+            var sortName = '@ViewBag.SortNameParm';
+            var currentGroupPictureAmount = '@ViewBag.CurrentGroupPictureAmount';
+            $.post("/Advertise/SortByName", { "sortName": sortName, "currentGroupPictureAmount": currentGroupPictureAmount },
+            //$.post("/News/SortByName", { "sortName": sortName, "currentNewsAmount": currentNewsAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+    });
+        </script>*@
+
+<!-- Table -->
+<div id="DataTable">
+
+    <div class="row-fluid">
+        <div class="span3">
+            <div style="margin-top: 18px;">
+                Tổng số Link ảnh: <span style='color: #A52A2A;'>@Model.Count</span> / <span style='color: #333;'>@Model.TotalItemCount</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="pagedlist-top">
+        @Html.Partial("_Paging")
+    </div>
+
+
+    <table class="table table-striped table-bordered dataTable table-hover" cellspacing="0" id="tblAdvertiseIndex" style="border-collapse: collapse;">
+        <tr>
+            <th scope="col" class="text-center" style="width: 30px;">
+                <input type="checkbox" onclick="Javascript: chkSelectAll_OnClick(this)" id="chkSelectAll" name="checkAll" />
+                <input name="mPage" id="mPage" value="@ViewBag.mPage" hidden="hidden" />
+                <input name="PageSize" id="PageSize" value="@ViewBag.PageSize" hidden="hidden" />
+            </th>
+            <th class="Image text-center" style="width: 55px;">Ảnh</th>
+            <th scope="col" id="name" class="NumberOrdDown" style="width: 250px;">
+                @Html.Label("Tên Link ảnh", new { @id = "SortName", sortName = ViewBag.SortNameParm })
+            </th>
+            <th scope="col" id="link" class="text-left " style="width: 300px;">Link</th>
+            <th scope="col" id="width" class="text-left " style="width: 40px;">Độ rộng</th>
+            <th scope="col" id="height" class="text-left " style="width: 40px;">Chiều cao</th>
+            <th scope="col" id="ord" class="NumberOrdDown text-left" style="width: 40px;">
+                @Html.Label("Thứ tự", new { @id = "lbSortOrd", thutu = ViewBag.SortOrdParm })
+            </th>
+            <th scope="col" id="position" style="width: 100px;">Vị trí</th>
+
+            <th scope="col" id="active" class="text-center " style="width: 40px;">Trạng thái</th>
+            <th scope="col" class="function" style="width: 60px; text-align: center">Chức năng</th>
+        </tr>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr style="background-color: #fff">
+                <td class="text-center">
+                    @Html.CheckBox("chk" + Model[i].Id, new { id = "chkSelect", onclick = "Javascript:chkSelect_OnClick(this,0)", @class = "chk" })
+                </td>
+                <td style="width: 55px;" class="Image text-center">
+                    <img id="SelectImage" class="image" src="@Model[i].Image" style="width:40px; max-height: 40px" /></td>
+                <td class="text-center" style="width: 250px;">
+                    @Html.TextBox("Name" + Model[i].Id, @Model[i].Name, new { @style = "width:95%; float:left", @class = "name text-left", @id = Model[i].Id })
+                </td>
+                <td class="text-center" style="width: 300px;">
+                    @Html.TextBox("Link" + Model[i].Id, @Model[i].Link, new { @style = "width:96%; float:left", @class = "link text-left", @id = Model[i].Id })
+                </td>
+                <td class="number text-center " style="width: 40px;">
+                    @Html.TextBox("Width" + Model[i].Id, @Model[i].Width, new { @style = "width:80%; float:left", @class = "width text-center", @id = Model[i].Id, onkeypress = "OnlyInputNumber(0)" })
+                </td>
+                <td class="number text-center " style="width: 40px;">
+                    @Html.TextBox("Height" + Model[i].Id, @Model[i].Height, new { @style = "width:80%; float:left", @class = "height text-center", @id = Model[i].Id, onkeypress = "OnlyInputNumber(0)" })
+                </td>
+                <td class="number text-center " style="width: 40px;">
+                    @Html.TextBox("Ord" + Model[i].Id, @Model[i].Ord, new { @style = "width:80%; float:left", @class = "ord text-center", @id = Model[i].Id, onkeypress = "OnlyInputNumber(0)" })
+                </td>
+                <td class="text-left " style="width: 100px;">
+                    @if (Model[i].Position == 0)
+                    {
+                        @Html.Label("Chưa đặt vị trí")
+                    }
+                    @if (Model[i].Position == 1)
+                    {
+                        @Html.Label("Logo")
+                    }
+                    @if (Model[i].Position == 2)
+                    {
+                        @Html.Label("Slide")
+                    }
+                    @if (Model[i].Position == 3)
+                    {
+                        @Html.Label("Icon Dịch vụ")
+                    }
+                </td>
+                <td class="text-center">
+                    @Html.CheckBox("Active" + Model[i].Id, @Model[i].Active == true ? true : false, new { @class = "active", @id = Model[i].Id })
+                </td>
+
+                <td class="text-center">
+                    <a href="/admin/link-anh/sua?id=@Model[i].Id" class="action-link-button" id="lbtUpdateSupport" title="Chỉnh sửa bản ghi"><i class="icon-edit"></i></a>
+                    <a href="/admin/link-anh/xoa?id=@Model[i].Id&trang=@ViewBag.mPage&kichco=@ViewBag.PageSize" class="yesno action-link-button"
+                                                title="Bạn chắc chắn muốn xóa không?"><i class="icon-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+    <!-- Table -->
+
+    <div class="pagedlist-bottom">
+        @Html.Partial("_Paging")
+    </div>
+
+
+    <div style="clear: both"></div>
+</div>

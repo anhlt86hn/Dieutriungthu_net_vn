@@ -1,0 +1,160 @@
+﻿@model Rico.Models.Advertise
+@{
+    ViewBag.Title = "AddMultiImage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm nhiều Link ảnh mới</h2>
+
+@section Scripts
+{
+    <!-- Validate Data -->
+    <script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#advertise-form").validate({
+                        rules: {
+                            Name: "required",
+                        },
+                        messages: {
+                            Name: "Phải nhập tên",                       
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+
+        })(jQuery, window, document);
+    </script>
+    <!-- End Validate Data -->
+
+    <script type="text/javascript">
+        var editor;
+        function createEditor(languageCode, id) {
+            var editor = CKEDITOR.replace(id, {
+                language: languageCode
+            });
+        }
+
+        $(function () {
+            createEditor('vi', 'Description');
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#SelectImage").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#Image").val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+    </script>
+
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">
+
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+            <ul>
+                <li><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                <li class='SecondLast'><a href='/admin/link-anh'>Link ảnh</a></li>
+                <li class='Last'><span>Thêm nhiều Link ảnh mới</span></li>
+            </ul>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        @using (Html.BeginForm("AddMulti", "Advertise", FormMethod.Post, new { enctype = "multipart/form-data", @id = "advertise-form", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <!-- widget-title -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Thêm nhiều Link ảnh mới</h4>
+
+                        <!-- Button -->
+                        @Html.Partial("_SaveNav")
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4><i class="icon-reorder"></i>&nbsp;Thêm nhiều Link ảnh mới</h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_SaveNav")
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-title -->
+
+                    <!-- widget-body -->
+                    <div class="widget-body">
+                        <div id="tabs">
+                            <div id="tabs-1">
+
+                                <table class="admintable" style="width: 100%;">
+                                    <tr>
+                                        <td class="key">Vị trí</td>
+                                        <td>
+                                            @Html.DropDownList("sllPosition")
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Vị trí
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Vị trí 
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Ảnh </td>
+                                        <td>
+                                            @Html.TextBox("Image", "", new { @class = "text" }) &nbsp;
+                                            @*<input id="SelectImages" type="button" value="Chọn ảnh" />*@
+                                            <input type="file" name="fileImg" id="fileImg" multiple />
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Ảnh
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Ảnh
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>                                    
+
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-body -->
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

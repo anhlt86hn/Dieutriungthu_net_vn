@@ -1,0 +1,171 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@*@model PagedList<Rico.Models.Picture>
+    @model IList<onsoft.Models.Picture>*@
+@model PagedList.IPagedList<Rico.Models.sp_Picture_GetByAll_NameGroup_Result>
+
+@{
+    ViewBag.Title = "Ảnh";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles
+{
+
+    <!--Sử dụng cho Confirm delete-->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+    <!--Sử dụng cho Phân trang-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+
+    @*<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <!--Sử dụng cho Confirm delete-->
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.easy-confirm-dialog.js"></script>
+    
+ <!-- #region confirm-->
+   <script type="text/javascript">
+        $(document).ready(function () {
+            $(".deletemultiple").easyconfirm({
+                locale: { title: 'Xóa nhiều', button: ['Không', 'Có'] }
+            });
+        })
+</script>
+  <!--#endregion-->
+<!-- #region load amount-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ddlPictureAmount').change(function () {
+                var pictureAmount = $(this).val();
+                var sortName = '@ViewBag.CurrentSortName';
+                $.post("/Picture/LoadPictureAmount", { "pictureAmount": pictureAmount, "sortName": sortName },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+        });
+    </script>
+ <!--#endregion-->
+  <!-- #region search -->  
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //Ajax sử dụng tìm kiếm sản phẩm theo tên
+            $('#PictureName').keyup(function () {
+                var picturename = $(this).val();
+
+                var catpicture = $("CatPicture").val();
+                $.post("/Picture/Index", { "picturename": picturename, "catpicture": catpicture },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+
+            //Ajax sử dụng tìm kiếm sản phẩm theo Danh Mục
+            $('#CatPicture').change(function () {
+                var catpicture = $(this).val();
+                var picturename = $("#PictureName").val();
+                $.post("/Picture/Index", { "catpicture": catpicture, "picturename": picturename },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+
+        });
+    </script>
+     <!--#endregion-->
+   <!--#region reset-->
+    <script type="text/javascript">
+        $(function () {
+            $('#PictureName').focus(function () {
+                $(this).val('');
+            });
+        });
+    </script>
+     <!--#endregion-->
+}
+
+@using (Html.BeginForm("MultiCommand", "Picture", FormMethod.Post, new { @id = "formPicture" }))
+{
+    <div class="container-fluid">
+        <div style="width: 100%; margin: 0 auto;">
+   
+    <!--#region clear-->
+            <div class="clear">
+
+            </div>
+            <!--#endregion-->
+    <!-- #region breadcrumb-->          
+  <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+                <ul>
+                    <li class='SecondLast'><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                    <li class='Last'><a href='/admin/anh'>Ảnh</a></li>
+                </ul>
+            </div>
+ <!-- #endregion-->
+    <!--#region clear-->
+            <div class="clear">
+
+            </div>
+            <!--#endregion-->    
+      
+            <div id="cph_Main_ContentPane">
+                <!--widget-->
+                <div class="widget">
+           
+                    <!-- #region right nav-->
+                    <div class="widget-title">
+                        <h4><i class="icon-list-alt"></i>&nbsp;Ảnh</h4>
+                        <!-- begin menu -->
+                        @Html.Partial("_RightNav")
+                        <!-- end menu -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4><i class="icon-list-alt"></i>&nbsp;Ảnh</h4>
+                            <div class="FloatMenuBar">
+                                <!-- begin menu -->
+                                @Html.Partial("_RightNav")
+                                <!-- end menu -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--#endregion-->
+
+                    <!--widget-body-->
+                    <div class="widget-body">
+                        <div class="row-fluid">
+                            <!-- #region load amount-->   
+                            <div class="span3">
+                                <div id="sample_1_length" class="dataTables_length">
+                                    @Html.DropDownList("ddlPictureAmount", null, new { style = "width:180px;" })
+                                </div>
+                            </div>
+                            <!--#endregion-->
+                            <!-- #region search -->
+                            <div class="span9 form-search pull-right text-right">
+                                @Html.TextBox("PictureName", ViewBag.CurrentPictureNameFilter as string, new { @Value = "Tên ảnh", @Style = "color:#999999;", @id = "PictureName" })
+                                @Html.DropDownList("Cat", null, "Chọn Danh Mục ảnh", new { @id = "CatPicture" })
+                                <button type="submit" id="btnSearch" name="btnSearch" class="btn"><i class="icon-filter"></i>Tìm kiếm</button>
+                            </div>
+                            <!--#endregion-->
+                    
+                        </div>
+                        <!-- Table Data-->
+    
+                        @{Html.RenderPartial("_Data", Model);}
+
+                        <!-- Table Data-->
+                    </div>
+                    <!--widget-body-->
+                </div>
+                <!--widget-->
+            </div>
+        </div>
+    </div>
+                            }

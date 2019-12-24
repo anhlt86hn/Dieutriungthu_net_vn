@@ -1,0 +1,10 @@
+﻿.clear {clear:both;}
+.NumberOrdDown, 
+.NumberOrdUp
+{
+    color:blue;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.txtInput {width:100%;}

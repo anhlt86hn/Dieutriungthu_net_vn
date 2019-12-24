@@ -1,0 +1,48 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_SubLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom col-xs-12 col-sm-12">
+            <ul>
+                <li class='SecondLast'><a href='/'><i class="icon-home" style="font-size: 14px;"></i>Trang chủ</a></li>
+                <li class='Last'><a href='@Html.Raw(ViewBag.MenuLink)'>@Html.Raw(ViewBag.MenuName)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 container-wrapper">
+            <div class="post">
+                <div class="row post-wrapper primary">
+                    <h3 class="primary-heading">
+                        <a class="title" href="@Model.Link">
+                            @Model.Name
+                        </a>
+                    </h3>
+
+                    <div class="description">
+                        <p>@Html.Raw(@Model.Content)</p>
+                        <p>@Html.Raw(@Model.Detail)</p>
+
+                        <figure class="col-sx-12 col-sm-4 post-thumbnail post-img">
+                            <img class="img-responsive" src="@Model.Image">
+                        </figure>
+
+                        <p>@Html.Raw(@Model.Detail)</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,24 @@
+﻿
+@using Rico.Models;
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_SubLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom col-xs-12 col-sm-12">
+            <ul>
+                <li class='SecondLast'><a href='/'><i class="icon-home" style="font-size: 14px;"></i>Trang chủ</a></li>
+                <li class='Last'><a href='/anh/@Html.Raw(ViewBag.GpTag)'>@Html.Raw(ViewBag.GpName)</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row image-detail">
+        <img class="img-responsive" src="@Model.Image" alt="@Model.Name" />
+        </div>
+    </div>
+

@@ -1,0 +1,98 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@model PagedList.IPagedList<Rico.Models.Video>
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<div class="viencenter">
+        <div class="phan2">
+            <div class="phan21">
+                <div class="toolcenterlager1"></div>
+                <div class="toolcenterlager2">
+                    <div class="kcgioithieu">
+                        @Html.Raw(ViewBag.MenuName)
+
+
+                        <span id="ctl00_lbsearch"></span>
+                    </div>
+                </div>
+                <div class="toolcenterlager3"></div>
+            </div>
+            <div class="phan21" style="padding-top:7px;">
+
+                <div valign="top">
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+                    <div style="color:#164C92; padding-bottom:7px;"><strong>@Model[i].Name</strong></div>
+                    <div align="center" style="padding-bottom:12px;">
+                        <object width="400" height="400" type="application/x-shockwave-flash" data="@Model[i].Link">
+                            <param name="movie" value="@Model[i].Link">
+                            <param name="wmode" value="transparent">
+                        </object>
+                    </div>
+    }
+                </div>
+                <div class="pagedlist-bottom">
+                    @Html.PagedListPager(Model, trang => Url.Action("Video", "Page", new { trang = trang }), (PagedListRenderOptions)ViewBag.ship)
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+<div class="viencenter">
+    <div class="phan2">
+        <div class="phan21">
+            <div class="toolcenterlager1"></div>
+            <div class="toolcenterlager2">
+                <div class="kcgioithieu">
+
+
+                    Phim phóng sự
+
+
+
+
+
+                    <span id="ctl00_lbsearch"></span>
+                </div>
+            </div>
+            <div class="toolcenterlager3"></div>
+        </div>
+        <div class="phan21" style="padding-top:7px;">
+
+            <div id="ctl00_xCMSContent_CellModule" valign="top">
+
+                <div style="color:#164C92; padding-bottom:7px;"><strong>Phóng sự nạn nhân Dioxin Nam Định</strong></div>
+                <div align="center" style="padding-bottom:12px;">
+                    <object width="400" height="400" type="application/x-shockwave-flash" data="http://www.youtube.com/v/EyQA4t3VP_s">
+                        <param name="movie" value="http://www.youtube.com/v/EyQA4t3VP_s">
+                        <param name="wmode" value="transparent">
+                    </object>
+                </div>
+
+                <div style="color:#164C92; padding-bottom:7px;"><strong>Thảm họa da cam</strong></div>
+                <div align="center" style="padding-bottom:12px;">
+                    <object width="400" height="400" type="application/x-shockwave-flash" data="http://www.youtube.com/v/F04TlX1ah5M&amp;feature=player_embedded">
+                        <param name="movie" value="http://www.youtube.com/v/F04TlX1ah5M&amp;feature=player_embedded">
+                        <param name="wmode" value="transparent">
+                    </object>
+                </div>
+
+
+                <div class="pagedlist-bottom">
+                    @Html.PagedListPager(Model, trang => Url.Action("Video", "Page", new { trang = trang }), (PagedListRenderOptions)ViewBag.ship)
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="footerlager"></div>

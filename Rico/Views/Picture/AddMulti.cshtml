@@ -1,0 +1,165 @@
+﻿@model Rico.Models.Picture
+@{
+    ViewBag.Title = "Thêm nhiều ảnh";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>NHẬP NHIỀU ẢNH 1 LÚC</h2>
+
+@section Scripts
+{
+    <!-- #region validate -->
+    <script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#formPicture").validate({
+                        rules: {
+                            Cat: "required",
+                            Name: "required",
+                            //Image: "required",                            
+                        },
+                        messages: {
+                            Cat: "Cần phải nhập Danh Mục ảnh", 
+                            Name: "Phải nhập tên ảnh",
+                            //Image: "Phải nhập nguồn ảnh",
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+
+        })(jQuery, window, document);
+    </script>
+    <!-- #endregion -->
+    <!-- #region ckeditor -->
+    <script type="text/javascript">
+        var editor;
+        function createEditor(languageCode, id) {
+            var editor = CKEDITOR.replace(id, {
+                language: languageCode
+            });
+        }
+
+        $(function () {
+            createEditor('vi', 'Description');
+        });
+    </script>
+    <!-- #endregion -->
+    <!-- #region ckfinder -->
+    <script type="text/javascript">
+        $(function () {
+            $("#SelectImage").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#Image").val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+    </script>
+     <!-- #endregion -->
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">
+        <!--#region breadcrumb-->
+    <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+            <ul>
+                <li><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                <li class='SecondLast'><a href='/admin/anh'>Ảnh</a></li>
+                <li class='Last'><span>Thêm nhiều Ảnh mới</span></li>
+            </ul>
+        </div>
+<!--#endregion-->
+        <div style="clear: both;"></div>
+
+        @using (Html.BeginForm("AddMulti", "Picture", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formPicture", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <!-- #region save nav -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Thêm nhiều Ảnh mới</h4>
+
+                        <!-- Button -->
+                        @Html.Partial("_SaveNav")
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4><i class="icon-reorder"></i>&nbsp;Thêm nhiều Ảnh mới</h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_SaveNav")
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- #endregion -->
+
+                    <!-- widget-body -->
+                    <div class="widget-body">
+                        <div id="tabs">
+                            <div id="tabs-1">
+
+                                <table class="admintable" style="width: 100%;">
+                                    <tr>
+                                        <td class="key">Danh Mục ảnh<span class="Required"></span></td>
+                                        <td>
+                                            @Html.DropDownList("Cat", "Chọn Danh Mục ảnh")
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Vị trí của ảnh.
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Vị trí của ảnh.
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Ảnh (tối đa 7-8 ảnh 1 lần)<span class="Required">*</span></td>
+                                        <td>
+                                            @Html.TextBox("Image", "", new { @class = "text" }) &nbsp;
+                                           
+                                            <input type="file" name="fileImg" id="fileImg" multiple />
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Nguồn ảnh
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Nguồn ảnh. Chọn upload ảnh từ client hoặc chọn ảnh có sẵn trên server.
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>                                    
+
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-body -->
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

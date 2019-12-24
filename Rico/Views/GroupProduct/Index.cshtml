@@ -1,0 +1,148 @@
+﻿@model PagedList.IPagedList<Rico.Models.GroupProduct>
+
+@{
+    ViewBag.Title = "Quản lý Danh Mục sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles
+{
+    <!--Sử dụng cho Confirm delete-->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+          <!--Sử dụng cho autocomplete-->
+    <!--Sử dụng cho Phân trang-->
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+}
+
+@section Scripts
+{
+    <!-- Ajax sử dụng cho phân trang  -->
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <!--Sử dụng cho Confirm delete-->
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.easy-confirm-dialog.js"></script>
+    <!--Sử dụng cho Confirm delete-->
+
+<script type="text/javascript">
+        $(document).ready(function () {           
+            $(".deletemultiple").easyconfirm({
+                locale: { title: 'Xóa nhiều', button: ['Không', 'Có'] }
+            });
+        })
+</script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            //Ajax sử dụng tìm kiếm sản phẩm theo tên
+            $('#GroupProductName').keyup(function () {
+                var groupproduct = $(this).val();
+
+                var catgroupproduct = $("CatGroupProduct").val();
+                $.post("/GroupProduct/Index", { "groupproduct": groupproduct, "catgroupproduct": catgroupproduct },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+
+            //Ajax sử dụng tìm kiếm sản phẩm theo Danh Mục
+            $('#CatGroupProduct').change(function () {
+                var catgroupproduct = $(this).val();
+                var groupproduct = $("#GroupProductName").val();
+
+                $.post("/GroupProduct/Index", { "catgroupproduct": catgroupproduct, "groupproduct": groupproduct },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+
+        });
+</script>
+
+<!--Ajax tùy biến số Danh Mục sản phẩm hiển thị trên trang-->
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#ddlGroupProductAmount').change(function () {
+                var groupproductAmount = $(this).val();
+                var sortName = '@ViewBag.CurrentSortName';
+                $.post("/GroupProduct/LoadGroupProductAmount", { "groupproductAmount": groupproductAmount, "sortName": sortName },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+        });
+</script>
+
+<!--Reset ô tìm kiếm-->
+<script type="text/javascript">
+        $(function () {
+            $('#GroupProductName').focus(function () {
+                $(this).val('');
+            });
+        });
+</script>
+}
+
+@using (Html.BeginForm("MultiCommand", "GroupProduct", FormMethod.Post))
+{
+    <div class="container-fluid">
+        <div style="width: 100%; margin: 0 auto;">
+            <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+                <ul>
+                    <li class='SecondLast' ><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                    <li class='Last'><a href="/admin/danh-muc-san-pham">Danh Mục sản phẩm</a></li>
+                </ul>
+            </div>
+            <div style="clear: both;"></div>
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <div class="widget-title">
+                        <h4><i class="icon-list-alt"></i>&nbsp;Danh Mục sản phẩm</h4>
+                        <!-- begin menu -->
+                        @Html.Partial("_RightNav")
+                        <!-- end menu -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-list-alt"></i>&nbsp;Danh Mục sản phẩm</h4>
+                            <div class="FloatMenuBar">
+                                @Html.Partial("_RightNav")
+                                <!-- begin menu -->
+                               
+                                <!-- end menu -->
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <!--Partial View hiển thị GroupProduct-->
+                        <div class="row-fluid">
+
+                            <div class="span3">
+                                <div id="sample_1_length" class="dataTables_length">
+                                    @Html.DropDownList("ddlGroupProductAmount", null, new { style = "width:180px;" })
+                                </div>
+                            </div>
+
+                            <!--Tìm kiếm sản phẩm-->
+                            <div class="span9 form-search pull-right text-right">
+                                
+                                @Html.TextBox("GroupProductName", ViewBag.CurrentGroupProductNameFilter as string, new { @Value = "Tên Danh Mục sản phẩm", @Style = "color:#999999;", @id = "GroupProductName" })                                
+                                @Html.DropDownList("Cat", null, "-- Danh Mục sản phẩm --", new { @id = "CatGroupProduct" })
+                                @*<button type="submit" id="btnSearch" name="btnSearch" class="btn"><i class="icon-filter"></i>Tìm kiếm</button>*@
+                            </div>
+                        </div>
+                        @{Html.RenderPartial("_Data", Model);}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+

@@ -1,0 +1,132 @@
+﻿@model PagedList.IPagedList<Rico.Models.Contact>
+@{
+    ViewBag.Title = "Phản hồi/liên hệ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Styles
+{
+    <!--Sử dụng cho Confirm delete-->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <!--Sử dụng cho Phân trang-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    <!-- Ajax sử dụng cho phân trang  -->
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <!--Sử dụng cho Confirm delete-->
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.easy-confirm-dialog.js"></script>
+}
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $(".deletemultiple").easyconfirm({
+                locale: { title: 'Xóa nhiều', button: ['Không', 'Có'] }
+            });
+        })
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".alert").hide();
+    });
+    </script>
+
+<!-- #region load amount-->
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#ddlContactAmount').change(function () {
+                var contactAmount = $(this).val();
+                var sortName = '@ViewBag.CurrentSortName';
+                $.post("/Contact/LoadContactAmount", { "contactAmount": contactAmount, "sortName": sortName },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+        });
+</script>
+<!--#endregion-->
+ <!-- #region search -->
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            //Ajax sử dụng tìm kiếm sản phẩm theo tên
+            $('#ContactName').keyup(function () {
+                var contactname = $(this).val();
+                $.post("/Contact/Index", { "contactname": contactname },
+                    function (data) {
+                        $("#DataTable").html(data);
+                    });
+            });
+
+        });
+</script>
+<!--#endregion-->
+ <!--#region reset-->
+<script type="text/javascript">
+        $(function () {
+            $('#ContactName').focus(function () {
+                $(this).val('');
+            });
+        });
+</script>
+<!--#endregion-->
+
+@using (Html.BeginForm("MultiCommand", "Contact", FormMethod.Post))
+{
+    <div class="container-fluid">
+        <div style="width: 100%; margin: 0 auto;">
+            <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+                <ul>
+                    <li class='SecondLast'><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                    <li class='Last'><a href='/admin/phan-hoi'>Phản hồi</a></li>
+                </ul>
+            </div>
+            <div style="clear: both;"></div>
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <div class="widget-title">
+                        <h4><i class="icon-list-alt"></i>&nbsp;Phản hồi</h4>
+                        <!-- begin menu -->
+                       @Html.Partial("_RightNav")
+                        <!-- end menu -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-list-alt"></i>&nbsp;Phản hồi
+                            </h4>
+                            <div class="FloatMenuBar">
+                                <!-- begin menu -->
+                               @Html.Partial("_RightNav")
+                                <!-- end menu -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="row-fluid">
+
+                            <!-- #region load amount-->
+                            <div class="span3">
+                                <div id="sample_1_length" class="dataTables_length">
+                                    @Html.DropDownList("ddlContactAmount", null, new { style = "width:180px;" })
+                                </div>
+                            </div>
+                            <!--#endregion-->
+                            <div class="span9 form-search pull-right text-right">
+                                @Html.TextBox("ContactName", ViewBag.CurrentContactNameFilter as string, new { @Value = "Tên phản hồi", @Style = "color:#999999;", @id = "ContactName" })                                
+                                <button type="submit" id="btnSearch" name="btnSearch" class="btn"><i class="icon-filter"></i>Tìm kiếm</button>
+                            </div>
+                            <!--Partial View hiển thị Phản hồi-->
+                            @{Html.RenderPartial("_Data", Model);}
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+                            }

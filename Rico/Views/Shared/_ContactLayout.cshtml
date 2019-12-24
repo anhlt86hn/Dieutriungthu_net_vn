@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>    
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="content-language" itemprop="inLanguage" content="vi" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="refresh" content="1800" />
+    
+    <meta name="revisit-after" content="1 days" />
+    <meta name="rating" content="general" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=2.0; user-scalable=2;">
+    <meta name="language" content="vietnamese"> 
+    <meta name="description" itemprop="description" content="@ViewBag.des" />
+    <meta name="keywords" itemprop="keywords" content="@ViewBag.key" />  
+    <meta name="robots" content="noindex, nofollow" />
+    
+    
+    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <link rel="stylesheet" type="text/css" href="~/Content/styles-contact.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css3.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui.css">
+    
+    <script language="javascript" type="text/javascript" src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/ref.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/uikit.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/uikit.min.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/js.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+    <script language="javascript" type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+    @RenderSection("Scripts", false)
+  
+</head>
+<body>  
+
+    <div class="wrapper">
+        @{Html.RenderPartial("~/Views/Shared/_MobileMenu2.cshtml");}
+        <div class="carea">
+            @{Html.RenderPartial("~/Views/Shared/_Header3.cshtml");}        
+            @RenderBody()
+            @{Html.RenderPartial("~/Views/Shared/_Footer.cshtml");}
+            
+        </div>
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,338 @@
+﻿@model Rico.Models.Config
+@{
+    ViewBag.Title = "Sửa Cấu Hình | Quản Trị Hệ Thống";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Scripts
+{
+    <!-- Validate Data -->
+    <script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#config-form").validate({
+                        rules: {
+                            Title: "required",
+                            Description: "required",
+                            Keyword: "required",
+                        },
+                        messages: {
+                            Title: "Phải nhập tiêu đề SEO trang chủ",
+                            Description: "Phải nhập mô tả SEO trang chủ",
+                            Keyword: "Phải nhập từ khóa SEO trang chủ",
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+
+        })(jQuery, window, document);
+    </script>
+    <!-- End Validate Data -->
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">
+
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+            <ul>
+                <li class='SecondLast'><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                <li class='Last'><a href='/admin/cau-hinh'>Cập nhật cấu hình</a></li>
+            </ul>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        @using (Html.BeginForm("Config", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "config-form", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <!-- widget-title -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Cấu hình</h4>
+
+                        <!-- Button -->
+                        <div class="ui-widget-content ui-corner-top ui-corner-bottom">
+                            <div id="toolbox">
+                                <div style="float: right;" class="toolbox-content">
+
+                                    <table class="toolbar">
+                                        <tr>
+                                            <td align="center">
+
+                                                <button type="submit" class="toolbar btn btn-info"><i class="icon-save"></i>&nbsp;Ghi lại</button>
+
+                                            </td>
+                                            <td align="center">
+
+                                                <a title="Quay lại" class="toolbar btn btn-info" href="/admin/default"><i class="icon-chevron-left"></i>&nbsp;Trở về</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-reorder"></i>&nbsp;Cấu hình</h4>
+                            <div class="FloatMenuBar">
+
+                                <div class="ui-widget-content ui-corner-top ui-corner-bottom">
+                                    <div id="Div1">
+
+                                        <div style="float: right;" class="toolbox-content">
+
+                                            <table class="toolbar">
+                                                <tr>
+                                                    <td align="center">
+                                                        <button type="submit" class="toolbar btn btn-info"><i class="icon-save"></i>&nbsp;Ghi lại</button>
+                                                    </td>
+                                                    <td align="center">
+                                                        <a title="Quay lại" class="toolbar btn btn-info" href="/admin/default"><i class="icon-chevron-left"></i>&nbsp;Trở về</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-title -->
+
+                    <!-- widget-body -->
+                    <div class="widget-body">
+                        <div id="tabs">
+                            <div id="tabs-1">
+
+                                <table class="admintable" style="width: 100%;">                                                                     
+                                    <tr>
+                                        <td class="key">
+                                            Tiêu đề trang chủ (SEO)<span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Title", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Title
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Title
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">
+                                            Mô tả (SEO) <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Description", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Description
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Description
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="key">
+                                            Từ khóa (SEO) <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Keyword", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Keyword
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Keyword
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="key">
+                                            Website
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Website", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Website
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Website
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr> 
+
+                                    <tr>
+                                        <td class="key">
+                                            Phone
+                                        </td>
+                                        <td>
+                                            @Html.TextBox("Phone", "", new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Phone
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Phone
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr> 
+
+                                    <tr>
+                                        <td class="key">
+                                            Email
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Email", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Email
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Email
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr> 
+
+                                    <tr>
+                                        <td class="key">
+                                            Facebook Link
+                                        </td>
+                                        <td>
+                                            @Html.TextArea("Facebook", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Facebook Link
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Facebook Link
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr> 
+                                                
+                                    <tr>
+                                        <td class="key">Facebook App ID</td>
+                                        <td>
+                                            @Html.TextBox("FaceAppID", "", new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Facebook App ID
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Facebook App ID
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Google ID</td>
+                                        <td>
+                                            @Html.TextArea("GoogleId", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Google ID
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Google ID
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr> 
+                               
+                                   
+                                                                                                                             
+                                    <tr>
+                                         <td class="key">Copyright (Footer)</td>
+                                        <td class="post-content">
+                                            @Html.TextArea("Copyright", new { @style = "width: 1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Copyright
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Copyright
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-body -->
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    var editor;
+    function createEditor(languageCode, id) {
+        var editor = CKEDITOR.replace(id, {
+            language: languageCode
+        });
+    }
+
+    $(function () {
+        createEditor('vi', 'Copyright');     
+    });
+</script>

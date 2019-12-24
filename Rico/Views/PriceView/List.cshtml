@@ -1,0 +1,78 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_SubLayout.cshtml";
+}
+
+<div class="container sub-main-wrapper">
+    <div class="row">
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom col-xs-12 col-sm-12">
+            <ul>
+                <li class='SecondLast'><a href='/'><i class="icon-home" style="font-size: 14px;"></i>Trang chủ</a></li>
+                <li class='Last'><a href='@Html.Raw(ViewBag.MenuLink)'>@Html.Raw(ViewBag.MenuName)</a></li>
+            </ul>
+        </div>
+    </div>
+
+<div class="row container-wrapper price">
+     <div class="col-xs-12 col-sm-12 price-wrapper">
+        <h3 class="price-heading">Báo giá chụp ảnh cưới</h3>
+         <ul class="bxslider" data-call="bxslider" data-options="slideMargin:5, autoReload:true" data-breaks="[{screen:0, slides:1, pager:false}, {screen:460, slides:2}, {screen: 768, slides:5}]">
+             @for (int i = 0; i < Model.Count; i++)
+             {
+                        <li class="col-sx-12 price-li">
+                            <div class="li-block">
+                                <header>@Model[i].Name</header>
+                                <div class="display-price">@Model[i].Quote</div>
+                                <ul class="inner">
+                                    <li>@Model[i].Promotion1</li>
+                                    <li>@Model[i].Promotion2</li>
+                                    <li>@Model[i].Album</li>
+                                    <li>@Model[i].BigPhoto</li>
+                                    <li>@Model[i].Dress</li>
+                                </ul>
+             <a href="/bao-gia/chi-tiet#@Model[i].Tag" title="@Model[i].Name" class="readmore my-display-block">Xem chi tiết<i class="my-icon-caret-right my-margin-left"></i></a>
+                            </div>
+                        </li>
+             }
+         </ul>
+         @*<a href="#" class="prev">&lsaquo;</a>
+         <a href="#" class="next">&rsaquo;</a>*@
+     </div>
+    </div>
+    </div>
+
+@*<div class="fc-panel-body text-grid-panel">
+    <div class="uk-slidenav-position" data-uk-slider="{}">
+        <div class="uk-slider-container">
+            <div class="uk-container uk-container-center">
+                <div class="uk-overflow-hidden">
+                    <ul class="uk-slider uk-grid uk-grid-medium uk-grid-width-small-1-3 uk-grid-width-medium-1-4 uk-grid-width-large-1-5" data-uk-grid-match="{target:'.grid-match'}">
+                        <li class="uk-text-center product-highlight">
+                            <div class="fc-block fc-transition">
+                                <header class="header uk-text-bold fc-text-uppercase uk-text-truncate">Gói trang điểm nhà riêng</header>
+                                <div class="price uk-text-bold">4.890.000đ</div>
+                                <ul>
+                                    <li>Trang điểm nh&agrave; ri&ecirc;ng 100km</li>
+                                    <li>Tặng voucher 2.000.000 khi mua nhẫn cưới</li>
+                                    <li>01 Album 20x30 hoặc (25x25)</li>
+                                    <li>02&nbsp;Ảnh&nbsp;lớn (50x75) tr&aacute;ng gương&nbsp;hoặc 2 ảnh&nbsp;(60x90) &eacute;p gỗ lami</li>
+                                    <li>01 v&aacute;y cưới</li>
+                                </ul>
+                                <a href="/#product-14" title="GÓI TRANG ĐIỂM NHÀ RIÊNG" class="readmore uk-display-block">Xem chi tiết<i class="uk-icon-caret-right uk-margin-left"></i></a>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div><!-- .uk-overflow-hidden -->
+            </div><!-- .uk-container -->
+            <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slider-item="previous"></a>
+            <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
+        </div><!-- .uk-slider-container -->
+    </div><!-- .uk-slidenav-position -->
+</div><!-- .fc-panel-body -->*@

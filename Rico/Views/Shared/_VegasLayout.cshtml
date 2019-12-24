@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@ViewBag.des" />
+    <meta name="keywords" content="@ViewBag.key" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="vi-Vn">
+    <meta name="revisit-after" content="1 days">
+    <meta name="author" content="Rico">
+    <link rel="canonical" href="" />
+    <link rel="alternate" href="" hreflang="vi-vn" media="handheld" />
+    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />   
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Fonts/FontFace.css" rel="stylesheet" />
+    @*<link href="~/Content/jcarousellite.css" rel="stylesheet" />*@
+    <link href="~/Content/jquery.bxslider.css" rel="stylesheet" />
+    <link href="~/Content/vegas.min.css" rel="stylesheet" />
+    <link href="~/Content/vegasstyle.css" rel="stylesheet" />
+    <link href="~/Content/Styles.css" rel="stylesheet" /> 
+    @*<link href="~/Content/smartmenus.css" rel="stylesheet" />
+    <link href="~/Content/Header_smartmenus.css" rel="stylesheet" />*@
+    <link href="~/Content/Responsive.css" rel="stylesheet" />
+          
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 100%;
+            margin: auto;
+        }
+    </style> 
+   
+
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Fonts/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <div class="container-fluid">
+        @{Html.RenderPartial("~/Views/Shared/_Header.cshtml");}
+        <div id="main">
+            <div id="loader"></div>
+            @RenderBody()
+        </div>
+    </div>
+    @{Html.RenderPartial("~/Views/Shared/_Support.cshtml");}
+    @*@{Html.RenderPartial("~/Views/Shared/_Facebook.cshtml");}*@
+     @*@Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)*@
+    @*<script src="~/Scripts/Html5.js"></script>*@ @*the shiv code HTML5: for IE8 and earlier*@
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/vegas.min.js"></script>
+    @*<script src="~/Scripts/jquery.jcarousellite.js"></script>*@
+    @*<script src="~/Scripts/jcarousellite1.0.1.styles.js"></script>
+    <script src="~/Scripts/jcarousellite1.0.1.js"></script>*@
+
+    <script src="~/Scripts/jquery.bxslider-rahisified.js"></script>
+    <script src="~/Scripts/jquery-scrolltofixed-min.js"></script>
+    @*<script src="~/Scripts/jquery.smartmenus.js"></script>*@
+  @*<script src="~/Scripts/bar.js"></script>*@
+
+
+    <script type="text/javascript">
+ // Back To Top Button
+        $(function () {
+            $('body').append('<div id="backtotop"></div>');
+            $(window).scroll(function () {
+                var $toa_do = $(window).scrollTop();
+                if ($toa_do == 0) { $('#backtotop').fadeOut(); }
+                else { $('#backtotop').fadeIn() };
+            });
+            $('#backtotop').click(function () {
+                $('html,body').animate({ scrollTop: 0 }, 500);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $('#face .btnface').click(function (event) {
+                if ($('#face').css('right') == '0px') {
+                    $('#face').css({
+                        'right': '-290px', 'z-index': '999999999'
+                    });
+                } else {
+                    $('#face').css({
+                        'right': '0px', 'z-index': '999999'
+                    });
+                }
+            });
+
+            $(function () {
+                $('.om-slide-open-holder').click(function ()
+                {
+                    var clicked = $('#box').click();
+                    if (clicked) {
+                        $('#box').css('display', 'block');
+                    }
+                });
+            });
+        });</script>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#top-sp').on('click', function () {
+            var check = $('.img2').attr('class');
+            if (check == 'img2') {
+                $('.img2').addClass('down');
+                $('#body-sp').show('slow');
+            } else {
+                $('#body-sp').hide('slow');
+                $('.img2').removeClass('down');
+            }
+        })
+    });
+
+    </script>
+
+    <script>
+        $(function () {
+            $('body').vegas({
+    delay: 7000,
+    timer: false,
+    shuffle: true,
+    firstTransition: 'zoomOut',
+    firstTransitionDuration: 1000,
+    //transition: ['fade', 'fade2', 'zoomOut', 'swirlLeft', 'swirlRight','zoomOut2'],
+    transitionDuration: 1000,
+    //animation: ['kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight'],
+
+    slides: [
+    {
+        src: 'Uploads/link/logochuan.jpg',
+        transition: "fade2",
+        transitionDuration: 1e4
+    },
+    {
+        src: 'Uploads/link/logochuan.jpg',
+        animation: "kenburns",
+        transition: "swirlLeft"
+    },
+    {
+        src: 'Uploads/link/a0.jpg',
+        transition: "zoomOut",
+        transitionDuration: 8e3
+    },
+    {
+        src: 'Uploads/anh/a2.jpg',
+        transition: "swirlRight"
+    },
+    {
+        src: 'Uploads/link/a4.jpg',
+        animation: "kenburns"
+    },
+
+    ],
+    });
+    });
+        </script>
+
+    <script>
+	// $(document).ready(function() {
+	// 	var h = $(window).height();
+	// 	alert(h);
+	// 	$('#header').css('margin-top', h);
+	// 	$('#header .index-slide .uk-slideshow [class*=fc-crop-center-img]').height(h);
+	// });
+	var windowwidth = $( window ).width();
+	var issetSlide = 1;
+	$(window).scroll(function(){
+		var breakpoint = ((windowwidth<768)||(issetSlide==1))?600:0;
+		if ($(this).scrollTop() > breakpoint) {
+		    $('.navbar-default').addClass('scroll');
+		    //$('#header .navigation').addClass('scroll');
+		} else {
+		    $('.navbar-default').removeClass('scroll');
+		    //$('#header .navigation').removeClass('scroll');
+
+		}
+	});
+    </script>
+
+    @*<script> // Smartmenu
+        $(function () {
+            $('#top_menu').smartmenus({
+                markCurrentItem: true,
+                subMenusSubOffsetX: 1,
+                subMenusSubOffsetY: -8
+            });
+        });
+    </script>*@
+
+    <script>
+    $(document).ready( function() {
+
+    $('#myslider').bxSlider({
+    slideMargin: 5,
+    autoReload: true,
+    breaks: [{screen:0, slides:1, pager:false},{screen:460, slides:2},{screen:768, slides:3}]
+    });
+
+    });
+</script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76602054-1', 'remcuaductrung.com');
+        ga('send', 'pageview');
+    </script>
+
+</body>
+</html>

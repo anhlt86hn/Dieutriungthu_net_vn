@@ -1,0 +1,72 @@
+﻿<div class="toptop none">
+    <div class="btn_menu" id="sib_btn"><img alt="Menu Mobile" src="~/Content/images/menu.png" /></div>
+    <div class="htop">
+        <a href="#" alt="Logo Seiken" title="Logo Seiken"><img src="~/Content/images/logo.png"  /></a>
+    </div>
+</div>
+<header>
+    <div id="toptop" class="block">
+        <div class="main">
+            <div class="share">
+                <div class="addthis_toolbox share">
+                    <a title="Facebook" class="addthis_button_facebook at300b">
+                        <img border="0" alt="Share to Facebook" src="~/Content/images/icon_face.png">
+                    </a>
+                    <a title="Tweet" class="addthis_button_twitter at300b">
+                        <img border="0" alt="Share to Twitter" src="~/Content/images/icon_twiter.png">
+                    </a>
+                    <a title="Pinterest" class="addthis_button_pinterest_share at300b">
+                        <img border="0" alt="Share to pinterest" src="~/Content/images/icon_pinterest.png">
+                    </a>
+                    <a title="Google+" class="addthis_button_google_plusone_share">
+                        <img border="0" alt="google bookmark" src="~/Content/images/icon_gg.png">
+                    </a>
+                </div>
+            </div>
+            <div class="toptop-nav">
+                <ul class="">
+                    <li><span><i>Tư vấn giải pháp điều trị ung thư hiệu quả nhất tại Việt Nam.</i></span></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="htop" class="block">
+        <div class="logo">
+        <img alt="Logo Mobile Seiken" title="Logo Mobile Seiken" src="~/Content/images/logo_mobile.png">
+        </div>
+    </div>
+    <div class="logo-phone block">
+        <img alt="Logo Seiken" title="Logo Seiken" src="~/Content/images/logo.png">
+    </div>
+
+    <div id="menu-top" class="block">
+        <div class="main">
+            <ul>
+                @{Html.RenderAction("_MainMenu", "Home_PartialView");}
+            </ul>
+        </div>
+    </div>
+    <div id="banner" class="wrap bg3">
+        <div class="main">
+            <div class="bn1">
+            <img src="~/Content/images/pic1c_banner.png">
+        </div>
+        <div class="bnr">
+            <div class="bn2"><img src="~/Content/images/thutucdangkythuantien.png"></div>
+            <div class="bn3">
+                <img src="~/Content/images/pic1cc_banner.png">
+            <img src="~/Content/images/pic2c_banner.png">
+            <img src="~/Content/images/pic3c_banner.png">
+            </div>
+            <div class="bn6 block"><a href="http://tuvan.phongkhamthaiha.com/LR/Chatpre.aspx?id=KRI83907310&lng=en" title="Bác sĩ tư vấn" rel="nofollow"></a></div>
+
+
+        </div>
+            </div>
+        <div class="clear"></div>
+        <div class="pic-node"><div class="node"><a class="cs_point"></a><a class="cs_point"></a></div></div>
+    </div>
+    
+    @{Html.RenderAction("_NavMenu", "Home_PartialView");}
+</header>

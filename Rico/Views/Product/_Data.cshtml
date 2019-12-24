@@ -1,0 +1,567 @@
+﻿@model PagedList.IPagedList<Rico.Models.sp_Product_GetByAll_NameGroup_Result>
+
+@{
+    Layout = null;
+}
+<!--Sử dụng cho Confirm delete-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".yesno").easyconfirm({
+            locale: { title: 'Xóa', button: ['Không', 'Có'] }
+        });
+    })
+</script>
+
+
+<!-- #region Ajax change directly data in form-->
+<script type="text/javascript">
+    $(function () {
+        $('#msg').hide();
+        
+        $(".index").click(function () {
+            var id = $(this).attr("id");
+            clearUpdateMessage();
+            $.post("/Product/ChangeIndex", { "id": id },
+                function (data) {
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                    $('#msg').fadeOut(5000);
+                });
+        });
+
+        $(".priority").click(function () {
+            var id = $(this).attr("id");
+            clearUpdateMessage();
+            $.post("/Product/ChangePriority", { "id": id },
+                function (data) {
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                    $('#msg').fadeOut(5000);
+                });
+        });
+        $(".active").click(function () {
+            var id = $(this).attr("id");
+            clearUpdateMessage();
+            $.post("/Product/ChangeActive", { "id": id },
+                function (data) {
+                    $('#msg').show();
+                    $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                    $('#msg').fadeOut(5000);
+                });
+        });   
+
+        $(".code").change(function () {
+            var id = $(this).attr("id");
+            var code = $(this).val();
+            if (code == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập mã sản phẩm.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "code": code },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        $(".name").change(function () {
+            var id = $(this).attr("id");
+            var name = $(this).val();
+            if (name == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập tên sản phẩm.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "name": name },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        $(".priceretail").change(function () {
+            var id = $(this).attr("id");
+            var priceRetail = $(this).val();
+            if (priceRetail == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập giá chính.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "priceRetail": priceRetail },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        $(".pricepromotion").change(function () {
+            var id = $(this).attr("id");
+            var pricePromotion = $(this).val();
+            if (pricePromotion == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập giá khuyến mại.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "pricePromotion": pricePromotion },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        $(".num").change(function () {
+            var id = $(this).attr("id");
+            var num = $(this).val();
+            if (num == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập số lượng.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "num": num },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        $(".inventory").change(function () {
+            var id = $(this).attr("id");
+            var inventory = $(this).val();
+            if (inventory == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập số sản phẩm còn trong kho.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "inventory": inventory },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+
+        // Ajax sử dụng cho change Name
+        $(".tag").change(function () {
+            var id = $(this).attr("id");
+            var tag = $(this).val();
+            if (tag == "") {
+                $(".alert").replaceWith("<div class='alert alert-info'>" + "Phải nhập đúng dữ liệu." + "</div>");
+                $(".alert").fadeOut(4000);
+                // Báo lỗi nhập dữ liệu
+            } else {
+                $.post("/Product/UpdateDirect", { "id": id, "tag": tag },
+                    function (data) {
+                        // Thay đổi thành công
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);
+                    });
+            }
+        });
+
+
+
+        $(".ord").change(function () {
+            var id = $(this).attr("id");
+            var ord = $(this).val();
+            if (ord == "") {
+                // Báo lỗi nhập dữ liệu
+                $('#msg').show();
+                $('#update-message').removeClass().addClass("alert alert-error").text("Phải nhập thứ tự.");
+                $('#msg').fadeOut(5000);
+            } else {
+                clearUpdateMessage();
+                $.post("/Product/UpdateDirect", { "id": id, "ord": ord },
+                    function (data) {
+                        // Thay đổi thành công
+                        $('#msg').show();
+                        $('#update-message').removeClass().addClass("alert alert-info").text(htmlDecode(data));
+                        $('#msg').fadeOut(5000);
+                    });
+            }
+        });
+      
+
+     
+    });
+
+    function clearUpdateMessage() {
+        $('#update-message').text("");
+    }
+
+    function htmlDecode(value) {
+        if (value) {
+            return $('<div />').html(value).text();
+        }
+        else {
+            return '';
+        }
+    }
+</script>
+<!--#endregion-->
+
+<!--#region Thay đổi chiều mũi tên khi sắp xếp-->
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+        var currentSortOrder = '@ViewBag.CurrentSortOrder';
+            if (currentSortOrder == "ord asc") {
+                $('#ord').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+            }
+            else {
+                $('#ord').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+            }
+
+            var currentSortName = '@ViewBag.CurrentSortName';
+            if (currentSortName == "name asc") {
+                $('#name').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+            }
+            else {
+                $('#name').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+            }
+
+            var currentSortGroup = '@ViewBag.CurrentSortGroup';
+            if (currentSortGroup == "group asc") {
+                $('#group').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+            }
+            else {
+                $('#group').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+            }
+
+            var currentSortPriceRetail = '@ViewBag.CurrentSortPriceRetail';
+            if (currentSortPriceRetail == "priceretail asc") {
+                $('#priceretail').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+            }
+            else {
+                $('#priceretail').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+            }
+
+            var currentSortPricePromotion = '@ViewBag.CurrentSortPricePromotion';
+            if (currentSortPricePromotion == "pricepromotion asc") {
+                $('#pricepromotion').removeClass('NumberOrdDown').addClass("NumberOrdUp");
+            }
+            else {
+                $('#pricepromotion').removeClass('NumberOrdUp').addClass("NumberOrdDown");
+            }
+
+
+        })
+</script>*@
+<!-- #endregion -->
+
+<!--#region Sort data-->
+<!-- #region sort name -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#code').click(function () {
+            var sortCode = '@ViewBag.SortCodeParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByCode", { "sortCode": sortCode, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!-- #endregion -->
+<!-- #region sort name -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#name').click(function () {
+            var sortName = '@ViewBag.SortNameParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByName", { "sortName": sortName, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!-- #endregion -->
+
+<!-- #region sort group-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#group').click(function () {
+            var sortGroup = '@ViewBag.SortGroupParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByGroup", { "sortGroup": sortGroup, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort priceretail-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#priceretail').click(function () {
+            var sortPriceRetail = '@ViewBag.SortPriceRetailParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByPriceRetail", { "sortPriceRetail": sortPriceRetail, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort pricepromotion-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#pricepromotion').click(function () {
+            var sortPricePromotion = '@ViewBag.SortPricePromotionParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByPricePromotion", { "sortPricePromotion": sortPricePromotion, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort ord-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ord').click(function () {
+            var sortOrder = '@ViewBag.SortOrderParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByOrd", { "sortOrder": sortOrder, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort ord-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#num').click(function () {
+            var sortNum = '@ViewBag.SortNumParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByNum", { "sortNum": sortNum, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort ord-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#inventory').click(function () {
+            var sortInventory = '@ViewBag.SortInventoryParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Product/SortByInventory", { "sortInventory": sortInventory, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#region sort sdate-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sdate').click(function () {
+            var sortSDate = '@ViewBag.SortSDateParm';
+            var currentProductAmount = '@ViewBag.CurrentProductAmount';
+            $.post("/Picture/SortBySDate", { "sortSDate": sortSDate, "currentProductAmount": currentProductAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+
+    });
+</script>
+<!--#endregion-->
+
+<!--#endregion-->
+
+<div id="DataTable">
+    <div class="row-fluid">
+        <div class="span3">
+            <div style="margin-top: 18px;">
+                Tổng số sản phẩm: <span style='color: #A52A2A;'>@Model.Count</span> / <span style='color: #333;'>@Model.TotalItemCount</span>
+            </div>
+        </div>
+    </div>
+            <div class="pagedlist-top">
+                <!--Partial View phân trang-->
+                @Html.Partial("_Paging")
+                </div>
+
+    <div>
+        <!--Hiển thị sản phẩm-->
+        <table class="table table-striped table-bordered dataTable table-hover" cellspacing="0" id="grvProducts" style="border-collapse: collapse;">
+            <tr>
+                <th scope="col" class="CheckBoxsmall" style="text-align: center; width: 20px;">
+                    <input type="checkbox" onclick="Javascript: chkSelectAll_OnClick(this)" id="chkSelectAll" name="checkAll" />
+                    <input name="mPage" id="mPage" value="@ViewBag.mPage" hidden="hidden" />
+                    <input name="PageSize" id="PageSize" value="@ViewBag.PageSize" hidden="hidden" />
+                    <input type="submit" name="submit_btn" id="submit_btn" value="submit_btn" hidden="hidden" />
+                </th>
+                <th scope="col" id="code" class="number NumberOrdDown" style="width: 50px;">Mã sản phẩm</th>
+                <th scope="col" class="number" style="width: 50px;">Ảnh</th>
+                <th scope="col" id="name" class="NumberOrdDown">
+                    @Html.Label("Tên sản phẩm")
+                </th>
+                <th scope="col" id="tag" class="number" style="width: 90px">Chỉnh sửa Tag</th>
+                <th scope="col" id="group" class="NumberOrdDown" style="width: 180px;">
+                    @Html.Label("Tên Danh Mục sản phẩm")
+                </th>
+                <th scope="col" id="priceretail" class="number NumberOrdDown" style="width: 50px;">
+                    @Html.Label("Giá chính")
+                </th>
+                <th scope="col" id="pricepromotion" class="number NumberOrdDown" style="width: 50px;">
+                    @Html.Label("Giá khuyến mại")
+                </th>
+                <th scope="col" id="num" class="number NumberOrdDown" style="width: 40px;">
+                @Html.Label("Số lượng")
+                </th>
+                <th scope="col" id="inventory" class="number NumberOrdDown" style="width: 40px;">
+                    @Html.Label("Trong kho")
+                </th>               
+                <th scope="col" id="ord" class="number NumberOrdDown" style="width: 40px;">
+                    @Html.Label("Thứ tự")
+                </th>
+                <th scope="col" id="sdate" class="NumberOrdDown" style="width: 150px; text-align: center">@Html.Label("Ngày tạo")</th>
+                <th scope="col" class="number" style="width: 40px;">Trang chủ</th>
+                <th scope="col" class="number" style="width: 40px;">Ưu tiên</th>
+                <th scope="col" class="number" style="width: 40px;">Kích hoạt</th>
+                <th scope="col" class="number" style="width: 100px; text-align: center">Chức năng</th>
+
+                @*<th scope="col" id="num" class="number NumberOrdDown" style="width: 30px;">
+         @Html.ActionLink("Số lượng", "Num", new { style = "color:#646464; text-decoration:none;" })
+     </th>
+     <th scope="col" id="inventory" class="number NumberOrdDown" style="width: 30px;">
+         @Html.ActionLink("Còn hàng", "Inventory", new { sortPriceRetail = ViewBag.SortPriceRetailParm }, new { style = "color:#646464; text-decoration:none;" })
+     </th>
+    <th scope="col" id="pricepromotion" class="number NumberOrdDown" style="width: 100px;">
+         @Html.ActionLink("Giá khuyến mại", "PricePromotion", new { sortPricePromotion = ViewBag.SortPricePromotionParm }, new { style = "color:#646464; text-decoration:none;" })
+     </th>
+                <th scope="col" id="ord" class="number NumberOrdDown" style="width: 30px;">
+                    @Html.ActionLink("Thứ tự", "Ord", new { style = "color:#646464; text-decoration:none;" })
+                </th>*@
+                
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr style="background-color: #fff">
+                    <td style="text-align: center">
+                        @Html.CheckBox("chk" + Model[i].Id, new { id = "chkSelect", onclick = "Javascript:chkSelect_OnClick(this,0)", @class = "chk" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Code" + Model[i].Id, @Model[i].Code, new { @style = "width:100px; text-align:center;", @class = "code", @id = @Model[i].Id })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        <img width="40" src="@Model[i].Image" alt="@Model[i].Name"/>
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Name" + Model[i].Id, @Model[i].Name, new { @style = "width:300px; text-align: center; font-weight:bold;", @class = "name",  @id = @Model[i].Id})
+                    </td>
+                    <td style="text-align: center">
+                        @Html.TextBox("Tag" + Model[i].Id, @Model[i].Tag, new { @style = "width:100px; text-align: left", @class = "tag", @id = @Model[i].Id })
+                    </td>
+                    <td style="vertical-align: middle;width:180px;text-align:center;">
+                        @Model[i].Expr1
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Retail" + Model[i].Id, @Model[i].PriceRetail, new { @style = "width:80px; text-align: center", @class = "priceretail", @id = @Model[i].Id, onkeypress = "OnlyInputNumber(0)", onblur = "this.value=formatNumber(this.value,'#,###','')", onfocus = "this.value=remote_format(this.value)" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Promotion" + Model[i].Id, @Model[i].PricePromotion, new { @style = "width:80px; text-align: center", @class = "pricepromotion", @id = @Model[i].Id, onkeypress = "OnlyInputNumber(0)", onblur = "this.value=formatNumber(this.value,'#,###','')", onfocus = "this.value=remote_format(this.value)" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Num" + Model[i].Id, Model[i].Num, new { @style = "width:50px; text-align: center", @class = "num", @id = @Model[i].Id, onkeypress = "OnlyInputNumber(0)" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Inventory" + Model[i].Id, Model[i].Inventory, new { @style = "width:50px; text-align: center", @class = "inventory", @id = @Model[i].Id, onkeypress = "OnlyInputNumber(0)" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Html.TextBox("Ord" + Model[i].Id, Model[i].Ord, new { @style = "width:50px; text-align: center", @class = "ord", @id = @Model[i].Id,  onkeypress = "OnlyInputNumber(0)" })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+                        @Model[i].SDate
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+
+                        @Html.CheckBox("chkIndex" + Model[i].Id, (Model[i].Index == true) ? true : false, new { @class = "chk index", @id = @Model[i].Id })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+
+                        @Html.CheckBox("chkPriority" + Model[i].Id, (Model[i].Priority == true) ? true : false, new { @class = "chk priority", @id = @Model[i].Id })
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">
+
+                        @Html.CheckBox("chkActive" + Model[i].Id, (Model[i].Active == true) ? true : false, new { @class = "chk active", @id = @Model[i].Id })
+                    </td>
+
+                    <td class="text-center" style="vertical-align: middle;">
+                        <a href="/admin/san-pham/xem-Image?id=@Model[i].Id" class="action-link-button"
+                            title="Xem chi tiết"><i class="icon-picture"></i></a>
+                        <a href="/admin/san-pham/sua?id=@Model[i].Id" class="action-link-button"
+                                                title="Chỉnh sửa bản ghi"><i class="icon-edit"></i></a>
+
+                        <a href="/admin/san-pham/xoa?id=@Model[i].Id&trang=@ViewBag.mPage&kichco=@ViewBag.PageSize" class="yesno action-link-button"
+                                                title="Bạn chắc chắn muốn xóa không?"><i class="icon-trash"></i></a>
+
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="pagedlist-bottom">
+        <!--Partial View phân trang-->
+        @Html.Partial("_Paging")
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>

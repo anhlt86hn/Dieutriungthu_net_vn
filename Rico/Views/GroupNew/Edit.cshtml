@@ -1,0 +1,338 @@
+﻿@model Rico.Models.GroupNew
+@{
+    ViewBag.Title = "Chỉnh sửa Danh Mục Tin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Scripts
+{
+     <!-- Validate Data -->
+    <script type="text/javascript">
+
+        (function ($, W, D) {
+
+            var JQUERY4U = {};
+
+            JQUERY4U.UTIL =
+            {
+                setupFormValidation: function () {
+                    //validation rules
+                    $("#GroupNewedit-form").validate({
+                        rules: {
+                            Name: "required",
+                            Title: "required",
+                            Description: "required",
+                            Keyword: "required",
+                            Ord: {
+                                required: true,
+                                number: true
+                            }
+                        },
+                        messages: {
+                            Name: "Phải nhập tên Danh Mục",
+                            Title: "Phải nhập tiêu đề",
+                            Description: "Phải nhập miêu tả",
+                            Keyword: "Phải nhập từ khóa",
+                            Ord: {
+                                required: "Phải nhập thứ tự",
+                                number: "Phải nhập kiểu số"
+                            }
+                        },
+                        submitHandler: function (form) {
+                            form.submit();
+                        }
+                    });
+                }
+            }
+
+            //when the dom has loaded setup form validation rules
+            $(D).ready(function ($) {
+                JQUERY4U.UTIL.setupFormValidation();
+            });
+
+        })(jQuery, window, document);
+    </script>
+    <!-- End Validate Data -->
+
+<script type="text/javascript">
+        $(function () {
+            $("#SelectImage").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#Image").val(fileUrl);
+                };
+                finder.popup();
+            });
+        });
+</script>
+<script type="text/javascript">
+    var editor;
+    function createEditor(languageCode, id) {
+        var editor = CKEDITOR.replace(id, {
+            language: languageCode
+        });
+    }
+
+    $(function () {
+        createEditor('vi', 'Detail');
+    });   
+</script>
+}
+
+<div class="container-fluid">
+    <div style="width: 100%; margin: 0 auto;">
+
+        <div id="Breadcrumb" class="Block Breadcrumb ui-widget-content ui-corner-top ui-corner-bottom">
+            <ul>
+                <li><a href='/admin/default'><i class="icon-home" style="font-size: 14px;"></i>Trang quản trị</a></li>
+                <li class='SecondLast'><a href='/admin/danh-muc-tin'>Danh Mục Tin</a></li>
+                <li class='Last'><span>Sửa Danh Mục Tin</span></li>
+            </ul>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        @using (Html.BeginForm("Edit", "GroupNew", new { id = @Model.Id }, FormMethod.Post, new { @id = "GroupNewedit-form", @class = "validate-form" }))
+        {
+            <div id="cph_Main_ContentPane">
+                <div class="widget">
+                    <!-- widget-title -->
+                    <div class="widget-title">
+                        <h4><i class="icon-reorder"></i>&nbsp;Sửa Danh Mục Tin</h4>
+
+                        <!-- Button -->
+                        @Html.Partial("_SaveNav")
+                        <!-- End Button -->
+
+                        <div id="hiddenToolBarScroll" class="scrollBox hidden">
+                            <h4>
+                                <i class="icon-reorder"></i>&nbsp;Sửa Danh Mục Tin</h4>
+                            <div class="FloatMenuBar">
+
+                                @Html.Partial("_SaveNav")
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-title -->
+
+                    <!-- widget-body -->
+                    <div class="widget-body">
+                       
+                        <div id="tabs">
+                            <div id="tabs-1">
+                                @Html.HiddenFor(m => m.Id)
+                                <table class="admintable" style="width: 100%;">
+
+                                     <tr>
+                                        <td class="key">Thuộc Danh Mục Tin cha <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.DropDownList("GroupNew", "Danh Mục Tin cấp 1")
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Danh Mục Tin
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Danh Mục Tin
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Tên Danh Mục Tin <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Tên Danh Mục Tin
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Tên Danh Mục Tin
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>                                  
+
+                                    <tr>
+                                        <td class="key">Tiêu đề SEO <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Title, new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Tiêu đề
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Tiêu đề Tin
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Mô tả SEO <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Description, new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Mô tả SEO
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Mô tả SEO
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Từ khóa SEO <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Keyword, new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Từ khóa SEO
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Từ khóa SEO
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="key">Thứ tự <span class="Required">*</span>
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Ord, new { @onkeypress = "OnlyInputNumber(0)" })
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Thứ tự
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Thứ tự
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+                                     @*<tr>
+                                        <td class="key">
+                                            Tag
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Tag, new { @class = "text", style = "width:1250px" })
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Tag Danh Mục Tin
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Tag Danh Mục Tin
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>*@
+                                    <tr>
+                                        <td class="key">Ảnh</td>
+                                        <td>
+                                            @Html.TextBoxFor(mm => mm.Image, "", new { @class = "text", style = "width:1250px", @id = "Image" }) &nbsp;
+                                            <input id="SelectImage" type="button" value="Chọn ảnh" />
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Ảnh
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Ảnh
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Mô tả tóm tắt
+                                        </td>
+                                        <td class="post-content">
+                                            @Html.TextArea("Detail")
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Mô tả tóm tắt
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Mô tả tóm tắt
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">
+                                            Trang chủ
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.Index)
+                                            <span class="tooltip-help">
+                                                <span class="tooltipContent">
+                                                    <p class="tooltiptitle">
+                                                        Trang chủ
+                                                    </p>
+                                                    <p class="tooltipmessage">
+                                                        Trang chủ
+                                                    </p>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key">Ưu tiên
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.Priority)
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Ưu tiên
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Ưu tiên
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                  
+
+                                    <tr>
+                                        <td class="key">Kích hoạt
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(m => m.Active)
+                                            <span class="tooltip-help"><span class="tooltipContent">
+                                                <p class="tooltiptitle">
+                                                    Kích hoạt
+                                                </p>
+                                                <p class="tooltipmessage">
+                                                    Kích hoạt
+                                                </p>
+                                            </span></span>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- widget-body -->
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

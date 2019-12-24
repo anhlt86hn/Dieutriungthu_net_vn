@@ -1,0 +1,50 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@model PagedList.IPagedList<Rico.Models.News>
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_PostCategoryLayout.cshtml";
+}
+<section>
+    <section id="container">
+        <div class="main">
+            <nav id="breadcumds">
+                <ul>
+                    <li><a title="@Html.Raw(ViewBag.tithome)" href="/" itemprop="url"><span itemprop="title">Trang chủ</span></a></li>
+                    <li><a title="@ViewBag.Title" href="@Html.Raw(ViewBag.MenuLink)" itemprop="url"><span itemprop="title">@Html.Raw(ViewBag.MenuName)</span></a></li>
+                </ul>
+            </nav>                                  
+
+            @{Html.RenderAction("_PostMenu", "Home_PartialView");}
+
+            <article id="blog-list-article">
+                <div class="categories_desc">
+                    <div class="h1pt">
+                        <div class="categories_title"><h1>@Html.Raw(ViewBag.MenuName)</h1></div>
+                        <div class="addthis_toolbox share">
+                            <div class="custom_images">
+                                <a class="addthis_button_twitter"><img src="~/Content/Images/tweet.png" alt="Share to Twitter" border="0" /></a>
+                                <a class="addthis_button_facebook"><img src="~/Content/Images/face.png" alt="Share to Facebook" border="0" /></a>
+                                <a class="addthis_button_google_plusone_share"><img src="~/Content/Images/google.png" alt="google bookmark" border="0" /></a>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="categories_detail">
+                    <img src="~/Content/Images/pic_category.jpg" />@Html.Raw(ViewBag.CategoryDetail)
+                    </div>
+                </div>
+                @Html.Raw(ViewBag.Str)
+                <div class="paging-wrapper pagedlist-bottom">
+                    @Html.PagedListPager(Model, trang => Url.Action("List", "NewsView", new { trang = trang }), (PagedListRenderOptions)ViewBag.ship)
+                </div>
+            </article>
+        </div>
+        <div class="clear"></div>
+    </section>
+</section>
+
+

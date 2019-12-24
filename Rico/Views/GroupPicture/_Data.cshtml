@@ -1,0 +1,232 @@
+﻿@*@model PagedList.IPagedList<Rico.Models.GroupPicture>*@
+@model PagedList.IPagedList<Rico.Models.sp_GroupPicture_GetByAll_Result>
+@{
+    Layout = null;
+}
+<!--Sử dụng cho Confirm delete-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".yesno").easyconfirm({
+            locale: { title: 'Xóa', button: ['Không', 'Có'] }
+        });
+    })
+</script>
+
+<!--Ajax sử dụng sửa dữ liệu trực tiếp trên form-->
+<script type="text/javascript">
+    $(function () {
+      
+        $(".alert").hide();
+        $(".index").click(function () {
+            var id = $(this).attr("id");
+            $.post("/GroupPicture/ChangeIndex", { "id": id },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(4000);
+                });
+        });
+        $(".priority").click(function () {
+            var id = $(this).attr("id");           
+            $.post("/GroupPicture/ChangePriority", { "id": id },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(4000);                    
+                });
+        });
+        $(".active").click(function () {
+            var id = $(this).attr("id");
+            $.post("/GroupPicture/ChangeActive", { "id": id },
+                function (data) {
+                    $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                    $(".alert").fadeOut(4000);
+                });
+        });
+      
+        $(".ord").change(function () {
+            var id = $(this).attr("id");
+            var ord = $(this).val();
+            if (ord == "") {
+                $(".alert").replaceWith("<div class='alert alert-info'>" + "Phải nhập đúng dữ liệu." + "</div>");
+                $(".alert").fadeOut(4000);                
+            } else {                
+                $.post("/GroupPicture/UpdateDirect", { "id": id, "ord": ord },
+                    function (data) {
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);                      
+                    });
+            }
+        });
+        
+        $(".name").change(function () {
+            var id = $(this).attr("id");
+            var name = $(this).val();
+            if (name == "") {
+                $(".alert").replaceWith("<div class='alert alert-info'>" + "Phải nhập đúng dữ liệu." + "</div>");
+                $(".alert").fadeOut(4000);              
+            } else {               
+                $.post("/GroupPicture/UpdateDirect", { "id": id, "name": name },
+                    function (data) {
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);                     
+                    });
+            }
+        });
+
+        $(".tag").change(function () {
+            var id = $(this).attr("id");
+            var tag = $(this).val();
+            if (tag == "") {
+                $(".alert").replaceWith("<div class='alert alert-info'>" + "Phải nhập đúng dữ liệu." + "</div>");
+                $(".alert").fadeOut(4000);               
+            } else {             
+                $.post("/GroupPicture/UpdateDirect", { "id": id, "tag": tag },
+                    function (data) {
+                        $(".alert").replaceWith("<div class='alert alert-info'>" + data + "</div>");
+                        $(".alert").fadeOut(4000);                       
+                    });
+            }
+        });
+    });
+   
+   
+</script>
+
+<!--Ajax sử dụng sắp xếp dữ liệu trực tiếp trên form-->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Ajax sử dụng sắp xếp theo tên
+        $('#name').click(function () {
+            var sortName = '@ViewBag.SortNameParm';
+            var currentGroupPictureAmount = '@ViewBag.CurrentGroupPictureAmount';
+            $.post("/GroupPicture/SortByName", { "sortName": sortName, "currentGroupPictureAmount": currentGroupPictureAmount },
+                function (data) {
+                    $("#DataTable").html(data);
+                });
+        });
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Ajax sử dụng sắp xếp theo thứ tự
+        $('#ord').click(function () {
+            var sortOrder = '@ViewBag.SortOrderParm';
+            var currentGroupPictureAmount = '@ViewBag.CurrentGroupPictureAmount';
+            $.post("/GroupPicture/SortByOrd", { "sortOrder": sortOrder, "currentGroupPictureAmount": currentGroupPictureAmount },
+            function (data) {
+                $("#DataTable").html(data);
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Ajax sử dụng sắp xếp theo ngày tạo
+        $('#sdate').click(function () {
+            var sortSDate = '@ViewBag.SortSDateParm';
+            var currentGroupPictureAmount = '@ViewBag.CurrentGroupPictureAmount';
+            $.post("/GroupPicture/SortBySDate", { "sortSDate": sortSDate, "currentGroupPictureAmount": currentGroupPictureAmount },
+            function (data) {
+                $("#DataTable").html(data);
+            });
+        });
+    });
+</script>
+
+<div id="DataTable">
+
+    <div class="row-fluid">
+        <div class="span5">
+            
+                <div style="margin-top: 18px;">
+                    Tổng số Danh Mục ảnh: <span style='color: #A52A2A;'>@Model.Count</span> / <span style='color: #333;'>@Model.TotalItemCount</span>
+                    @*Tổng số Danh Mục ảnh: <span style='color: #A52A2A;'>@ViewBag.TotalGroupPicture</span>*@
+                </div>
+    
+        </div>
+        
+        </div>
+    <div class="pagedlist-top">
+        <!--Partial View phân trang-->
+        @Html.Partial("_Paging")
+    </div>
+    <!--Danh Mục Danh Mục ảnh-->
+   
+        <table class="table table-striped table-bordered dataTable table-hover" cellspacing="0" id="cph_Main_ctl00_ctl00_grvPictures" style="border-collapse: collapse;">
+            <tr>
+                <th style="width: 20px;" scope="col" class="CheckBoxsmall">
+                    <input type="checkbox" onclick="Javascript: chkSelectAll_OnClick(this)" id="chkSelectAll" name="checkAll" />
+                    <input name="mPage" id="mPage" value="@ViewBag.mPage" hidden="hidden" />
+                    <input name="PageSize" id="PageSize" value="@ViewBag.PageSize" hidden="hidden" />
+                </th>
+                <th class="Image text-center" style="width: 55px;">Ảnh</th>
+                <th id="name" class="text NumberOrdDown" style="width:200px;">@Html.Label("Tên Danh Mục ảnh")</th>
+                <th class="text" style="width: 240px">Chỉnh sửa tên Danh Mục ảnh</th>
+                <th class="text" style="width: 240px">Chỉnh sửa Tag</th>
+                <th id="ord" scope="col" class="number NumberOrdDown" style="width: 40px;">@Html.Label("Thứ tự")</th>
+                <th id="sdate" scope="col" class="number NumberOrdDown" style="width: 200px;">@Html.Label("Ngày tạo")</th>
+                <th scope="col" class="number" style="width: 40px;">Trang chủ</th>
+                <th scope="col" class="number" style="width: 40px;">Ưu tiên</th>
+                <th scope="col" class="number" style="width: 40px;">Kích hoạt</th>
+                <th scope="col" class="number" style="width: 100px; text-align: center">Chức năng</th>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr style="background-color: #fff">
+                    <td align="center">
+                        @Html.CheckBox("chk" + Model[i].Id, new { id = "chkSelect", onclick = "Javascript:chkSelect_OnClick(this,0)", @class = "chk" })
+                    </td>
+                    <td style="width: 55px;" class="Image text-center">
+                        <img id="SelectImage" class="image" src="@Model[i].Image" style="width:40px; max-height: 40px" />
+                    </td>
+                    <td style="text-align: left">
+                        @Rico.Models.StringClass.ShowNameLevel(Model[i].Name, Model[i].Level)
+                    </td>
+                    <td style="text-align: center">
+                        @Html.TextBox("Name" + Model[i].Id, @Model[i].Name, new { @style = "width:250px; text-align: left", @class = "name", @id = @Model[i].Id})
+                    </td>
+                    <td style="text-align: center">
+                        @Html.TextBox("Tag" + Model[i].Id, @Model[i].Tag, new { @style = "width:250px; text-align: left", @class = "tag", @id = @Model[i].Id })
+                    </td>
+                    <td style="text-align: center">
+                        @Html.TextBox("Ord" + Model[i].Id, @Model[i].Ord, new { @style = "width:40px; text-align: center", @class = "ord", @id = @Model[i].Id, onkeypress = "OnlyInputNumber(0)", onblur = "this.value=formatNumber(this.value,'#,###','')", onfocus = "this.value=remote_format(this.value)" })
+                    </td>
+                    <td style="text-align: center">
+                        @Model[i].SDate
+                    </td>
+                    <td style="text-align: center">
+                        @Html.CheckBox("Index", @Model[i].Index == true ? true : false, new { @class = "index", @id = @Model[i].Id })
+                    </td>
+                    <td style="text-align: center">
+                        @Html.CheckBox("Priority", @Model[i].Priority == true ? true : false, new { @class = "priority", @id = @Model[i].Id })
+                    </td>
+                    <td style="text-align: center">
+                        @Html.CheckBox("Active", @Model[i].Active == true ? true : false, new { @class = "active", @id = @Model[i].Id })
+                    </td>
+                    <td class="text-center">
+
+                        <a href="/admin/danh-muc-anh/them-cap-con?id=@Model[i].Id" class="action-link-button" 
+                                                title="Thêm cấp con"><i class="icon-plus"></i></a>
+
+                        <a href="/admin/danh-muc-anh/sua?id=@Model[i].Id" class="action-link-button"
+                           title="Chỉnh sửa bản ghi"><i class="icon-edit"></i></a>
+
+                        <a href="/admin/danh-muc-anh/xoa?id=@Model[i].Id&trang=@ViewBag.mPage&kichco=@ViewBag.PageSize" class="yesno action-link-button"
+                           title="Bạn chắc chắn muốn xóa không?"><i class="icon-trash"></i></a>
+
+
+                    </td>
+                </tr>
+            }
+        </table>
+  
+
+    <!--Partial View phân trang-->
+    <div class="pagedlist-bottom">
+        @Html.Partial("_Paging")
+        </div>
+        <div style="clear: both;"></div>
+
+    </div>

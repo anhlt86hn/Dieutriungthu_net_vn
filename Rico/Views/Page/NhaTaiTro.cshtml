@@ -1,0 +1,68 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Rico.Models;
+@model PagedList.IPagedList<Rico.Models.NhaTaiTro>
+@{
+    ViewBag.Title = @Html.Raw(ViewBag.tit);
+    ViewBag.des = @Html.Raw(ViewBag.des);
+    ViewBag.key = @Html.Raw(ViewBag.key);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="viencenter">
+    <div class="phan2">
+        <div class="phan21">
+            <div class="toolcenterlager1"></div>
+            <div class="toolcenterlager2">
+                <div class="kcgioithieu">
+                    @Html.Raw(ViewBag.MenuName)
+                    <span id="ctl00_lbsearch"></span>
+                </div>
+            </div>
+            <div class="toolcenterlager3"></div>
+        </div>
+        <div class="phan21" style="padding-top:7px;">
+
+            <div id="ctl00_xCMSContent_CellModule" valign="top">
+                <table id="ctl00_xCMSContent_ctl00_dlProject" cellspacing="0" border="0" style="border-width:0px;width:100%;border-collapse:collapse;">
+                    <tbody>
+@for (int i = 0; i < Model.Count; i++)
+{
+                        <tr>
+                            <td>
+                                <div class="Tin_Tuc">
+                                    <a class="Tin_Moi" href="/nha-tai-tro/@Model[i].Link">
+                                        @Model[i].Name
+                                    </a>
+                                    <a class="Anh_Tin" href="/nha-tai-tro/@Model[i].Link">
+                                    </a>
+                                    <div class="TomTat_Tin">
+                                        <p>@Model[i].Detail</p>
+                                        <p>Địa chỉ: @Model[i].Address</p>
+                                    </div>
+                                    <a class="chi_Tiet_San_Pham" href="/nha-tai-tro/@Model[i].Link">
+                                        <span>Xem tiếp...</span>
+                                    </a><br>
+                                </div>
+                            </td>
+                        </tr>
+}
+
+                        <tr>
+                        <td>
+                            <div class="pagedlist-bottom">
+                                @Html.PagedListPager(Model, trang => Url.Action("NhaTaiTro", "Page", new { trang = trang }), (PagedListRenderOptions)ViewBag.ship)
+                            </div>
+
+                        </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+             
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="footerlager"></div>
